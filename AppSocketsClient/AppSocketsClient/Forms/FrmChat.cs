@@ -16,5 +16,10 @@ namespace AppSocketsClient.Forms
         {
             InitializeComponent();
         }
+
+        private void btnExample_Click(object sender, EventArgs e)
+        {
+            pnlChat.Visible = !pnlChat.Visible;
+        }
     }
 }
