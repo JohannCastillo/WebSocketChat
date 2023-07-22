@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassComunica.cs" />
+    <Compile Include="ClassGeneral.cs" />
     <Compile Include="FrmServer.cs">
       <SubType>Form</SubType>
     </Compile>

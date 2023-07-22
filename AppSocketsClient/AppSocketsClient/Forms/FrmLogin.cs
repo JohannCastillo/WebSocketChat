@@ -21,16 +21,6 @@ namespace AppSocketsClient.Forms
            
         }
 
-        private void txtUser_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtUser_Leave(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
             FrmChat frm = new FrmChat();
