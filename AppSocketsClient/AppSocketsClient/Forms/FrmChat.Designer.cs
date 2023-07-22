@@ -37,6 +37,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(30)))), ((int)(((byte)(36)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "FrmChat";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmChat";
             this.ResumeLayout(false);
 
