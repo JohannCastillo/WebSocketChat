@@ -40,6 +40,7 @@
             this.pnlFriend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(29)))), ((int)(((byte)(36)))));
             this.pnlFriend.Controls.Add(this.lblIsOnline);
             this.pnlFriend.Controls.Add(this.lblUserName);
+            this.pnlFriend.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pnlFriend.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlFriend.ForeColor = System.Drawing.Color.White;
             this.pnlFriend.Location = new System.Drawing.Point(13, 3);
