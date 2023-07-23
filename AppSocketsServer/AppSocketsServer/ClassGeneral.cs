@@ -38,27 +38,48 @@ namespace AppSocketsServer
             usuariosGuardados.Add("jambri", "user");
         }
 
-        public bool continuarComunicacion(string user, string passw, ClassComunica instanciaComunica)
+        public int obtenerEstadoComunicacion(string user, string passw)
         {
-            bool rpta = false;
+            //1 = continuar
+            //2 = error no más conexiones
+            //3 = error usuario no existe
+            //4 = error passw incorrecto
+            //5 = error usuario ya conectado
+
+            int rpta = 1;
+            if(usernameConectadosToClassComunica.Count >= 6) //ya hay 6
+            {
+                rpta = 2; //ya hay 6 conectados
+                return rpta;
+            }
+
             try
             {
-                rpta = usuariosGuardados[user] == passw;
-                if (rpta)
+                if(usuariosGuardados[user] != passw)
                 {
-                    if(usernameConectadosToClassComunica.Count <= 6)
-                    {
-                        usernameConectadosToClassComunica.Add(user, instanciaComunica);
-                    }else
-                    {
-                        rpta = false;
-                    }
+                    rpta = 4; //contraseña incorrecta
+                    return rpta;
                 }
-            }catch(Exception ex)
-            {
-                Console.WriteLine("Ocurrio error: " + ex.ToString());
             }
+            catch (Exception ex)
+            {
+                //error por usuario inexistente
+                rpta = 3;
+                return rpta;
+            }
+
+            if (usernameConectadosToClassComunica.Keys.ToArray<string>().Contains(user))
+            {
+                rpta = 5; //usuario ya está conectado
+                return rpta;
+            }
+
             return rpta;
+        }
+
+        public void agregarUsuarioAConectados(string user, ClassComunica instanciaComunica)
+        {
+            usernameConectadosToClassComunica.Add(user, instanciaComunica);
         }
 
         public static ClassGeneral Instancia

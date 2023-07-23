@@ -43,12 +43,12 @@ namespace AppSocketsServer
             {
                 byte[] messageBytes = Encoding.UTF8.GetBytes(jsonStringified);
                 socketComunica.Send(messageBytes, SocketFlags.None);
-                Console.WriteLine($"Socket client sent message: \"{jsonStringified}\"");
+                Console.WriteLine($"Socket server sent message: \"{jsonStringified}\"");
             }
             catch (SocketException ex)
             {
                 // Manejar la excepción
-                Console.WriteLine($"Socket exception transmitiendo: {ex.Message}");
+                Console.WriteLine($"Socket server exception transmitiendo: {ex.Message}");
                 // También puedes cerrar el socket u otras acciones necesarias
             }
         }
@@ -90,8 +90,7 @@ namespace AppSocketsServer
                 }
                 catch (Exception ex)
                 {
-
-
+                    Console.WriteLine($"server recibir comunica: {ex.Message}");
                 }
             }
         }
@@ -106,7 +105,7 @@ namespace AppSocketsServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine($"enviar mensaje comunica: {ex.Message}");
             }
             
         }
@@ -116,19 +115,21 @@ namespace AppSocketsServer
             string[] conectados = { };
             try
             {
-                bool rpta = gobernador.continuarComunicacion(objetoLoginEnvio.usuario,objetoLoginEnvio.password, this);
-                if (rpta)
+                int rpta = gobernador.obtenerEstadoComunicacion(objetoLoginEnvio.usuario,objetoLoginEnvio.password);
+                if (rpta == 1)
                 {
                     this.myUsername = objetoLoginEnvio.usuario;
                     conectados = gobernador.usernameConectadosToClassComunica.Keys.ToArray<string>();
-                    Console.WriteLine(conectados);
-                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1, conectados);
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, rpta, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
+
+                    gobernador.agregarUsuarioAConectados(myUsername, this); //agregar recien a conectados
+
                     this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
                     avisarConexionUsuarioAOtros();
                 }else
                 {
-                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0, conectados);
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, rpta, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
                     this.transmitirHilo(serializado); //NO PERMITIR CHAT
                     //this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
