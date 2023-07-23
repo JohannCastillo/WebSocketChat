@@ -7,25 +7,37 @@ using Newtonsoft.Json;
 
 namespace AppSocketsClient.Helpers
 {
+    public static class MensajeUtil
+    {
+        public enum tipoMensaje
+        {
+            Mensaje,
+            LoginSolicitud,
+            LoginRespuesta,
+            UsuarioConectado,
+            UsuarioDesconectado
+        }
+    }
     class FormatoTipo
     {
+      
         [JsonProperty("tipo")]
-        public string tipo;
-        public FormatoTipo(string tipo)
+        public int tipo;
+        public FormatoTipo(int tipo)
         {
             this.tipo = tipo;
         }
     }
     class FormatoMensajeTexto
     {
-        public string tipo;
+        public int tipo;
         public string usuarioOrigen;
         public string usuarioDestino;
         public string mensaje;
 
         public FormatoMensajeTexto(string usuarioOrigen, string usuarioDestino, string mensaje)
         {
-            this.tipo = "M";
+            this.tipo = (int)MensajeUtil.tipoMensaje.Mensaje;
             this.usuarioOrigen = usuarioOrigen;
             this.usuarioDestino = usuarioDestino;
             this.mensaje = mensaje;
@@ -34,13 +46,13 @@ namespace AppSocketsClient.Helpers
 
     class FormatoLoginEnvio
     {
-        public string tipo;
+        public int tipo;
         public string usuario;
         public string password;
 
         public FormatoLoginEnvio(string usuario, string password)
         {
-            this.tipo = "L";
+            this.tipo = (int)MensajeUtil.tipoMensaje.LoginSolicitud;
             this.usuario = usuario;
             this.password = password;
         }
@@ -48,14 +60,14 @@ namespace AppSocketsClient.Helpers
 
     class FormatoLoginRespuesta
     {
-        public string tipo;
+        public int tipo;
         public string usuario;
         public int estado; //1 aceptado 0 rechazado
         public string[] conectados;
 
         public FormatoLoginRespuesta(string usuario, int estado, string[] conectados)
         {
-            this.tipo = "L";
+            this.tipo = (int)MensajeUtil.tipoMensaje.LoginRespuesta;
             this.usuario = usuario;
             this.estado = estado;
             this.conectados = conectados;
@@ -63,24 +75,24 @@ namespace AppSocketsClient.Helpers
     }
     class FormatoNuevoUsuarioConectado
     {
-        public string tipo;
+        public int tipo;
         public string usuario;
 
         public FormatoNuevoUsuarioConectado(string usuario)
         {
-            this.tipo = "C"; //Conectado
+            this.tipo = (int)MensajeUtil.tipoMensaje.UsuarioConectado; //Conectado
             this.usuario = usuario;
         }
     }
 
     class FormatoUsuarioDesconectado
     {
-        public string tipo;
+        public int tipo;
         public string usuario;
 
         public FormatoUsuarioDesconectado(string usuario)
         {
-            this.tipo = "D"; //Desconectado
+            this.tipo = (int)MensajeUtil.tipoMensaje.UsuarioDesconectado; //Desconectado
             this.usuario = usuario;
         }
     }

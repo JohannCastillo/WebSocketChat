@@ -24,6 +24,8 @@ namespace AppSocketsClient.Helpers
         private byte[] arregloRecive;
         private FrmLogin frmLogin;
 
+
+
         public Cliente(FrmLogin frmLogin)
         {
             this.frmLogin = frmLogin;
@@ -55,6 +57,7 @@ namespace AppSocketsClient.Helpers
             {
                 if (cliente != null && cliente.Connected)
                 {
+                    recepcionando.Abort();
                     cliente.Shutdown(SocketShutdown.Both);
                     cliente.Close();
                 }
@@ -62,7 +65,7 @@ namespace AppSocketsClient.Helpers
             catch (Exception ex)
             {
                 // Manejar cualquier excepción que pueda ocurrir al desconectar
-                Console.WriteLine("error " + ex.Message);
+                Console.WriteLine("Error desconexión" + ex.Message);
             }
         }
 
@@ -78,12 +81,12 @@ namespace AppSocketsClient.Helpers
 
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(stringRecibido);
 
-                    switch(recibidoObject.tipo)
+                    switch (recibidoObject.tipo)
                     {
-                        case "L":
+                        case (int)MensajeUtil.tipoMensaje.LoginRespuesta:
                             FormatoLoginRespuesta objetoLoginRpta = JsonConvert.DeserializeObject<FormatoLoginRespuesta>(stringRecibido);
-                            
-                            if(objetoLoginRpta.estado == 1)
+
+                            if (objetoLoginRpta.estado == 1)
                             {
                                 UserSession userSession = new UserSession(objetoLoginRpta.usuario, objetoLoginRpta.conectados);
                                 frmLogin.LoginSucceed(userSession);
@@ -91,16 +94,17 @@ namespace AppSocketsClient.Helpers
                             else frmLogin.LoginFailed();
 
                             break;
-                        case "M":
+                        case (int)MensajeUtil.tipoMensaje.Mensaje:
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(stringRecibido);
-                           break;
+                            break;
 
                     }
 
 
                 }
-            }
-            catch (Exception ex)
+            } catch (ThreadAbortException ex) {
+                throw;
+            } catch (Exception ex)
             {
                 MessageBox.Show("recibiendo: " + ex.Message);
             }

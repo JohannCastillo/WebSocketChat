@@ -19,6 +19,8 @@ namespace AppSocketsServer
         string myIp;
         string myUsername;
 
+        //Enum para facilitar la comprensión de los tipos de mensaje
+ 
         //Aquí se puede usar mejor una clase Chat (este sí se debería usar)
         //private Dictionary<string, List<String>> misChats = new Dictionary<string, List<string>>();
 
@@ -57,19 +59,20 @@ namespace AppSocketsServer
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(recibidoString);
 
                     if (recibidoObject == null) continue;
+                 
                     switch (recibidoObject.tipo)
                     {
-                        case "M":
+                        case (int)MensajeUtil.tipoMensaje.Mensaje:
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(recibidoString);
                             enviarMensajeAUser(objetoMensaje, recibidoString);
                             break;
                         //case "C":
                         //    //Solo aplica para cliente
                         //    break;
-                        case "D":
+                        case (int)MensajeUtil.tipoMensaje.UsuarioDesconectado:
                             desconectarUsuario(recibidoString);
                             break;
-                        case "L":
+                        case (int)MensajeUtil.tipoMensaje.LoginSolicitud:
                             FormatoLoginEnvio objetoLoginEnvio = JsonConvert.DeserializeObject<FormatoLoginEnvio>(recibidoString);
                             aceptarLogin(objetoLoginEnvio);
                             break;
