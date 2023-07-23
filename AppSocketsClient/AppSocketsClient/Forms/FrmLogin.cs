@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppSocketsClient.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,12 +14,14 @@ namespace AppSocketsClient.Forms
 {
     public partial class FrmLogin : Form
     {
-
+        Cliente client;
         public FrmLogin()
         {
             InitializeComponent();
 
-           
+            client = new Cliente();
+
+            conectarCliente();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -26,6 +29,29 @@ namespace AppSocketsClient.Forms
             FrmChat frm = new FrmChat();
             frm.Show();
             this.Hide();
+        }
+
+        private void btnTry_Click(object sender, EventArgs e)
+        {
+            conectarCliente();
+        }
+
+        private void conectarCliente() {
+           
+            btnLogin.Enabled = false;
+            lblConnectionState.Text = "Conectando ...";
+            Application.DoEvents();
+
+            if (client.conectar())
+            {
+                lblConnectionState.Text = "Conectado";
+                btnLogin.Enabled = true;
+                btnTry.Visible = false;
+            }
+            else
+            {
+                lblConnectionState.Text = "No se pudo conectar al servidor";
+            }
         }
     }
 }
