@@ -55,7 +55,8 @@ namespace AppSocketsServer
 
                     string recibidoString = Encoding.UTF8.GetString(buffer);
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(recibidoString);
-                    
+
+                    if (recibidoObject == null) continue;
                     switch (recibidoObject.tipo)
                     {
                         case "M":
@@ -76,6 +77,7 @@ namespace AppSocketsServer
                 }
                 catch (Exception ex)
                 {
+
 
                 }
             }
