@@ -20,7 +20,7 @@ namespace AppSocketsServer
         string myUsername;
 
         //Aquí se puede usar mejor una clase Chat (este sí se debería usar)
-        private Dictionary<string, List<String>> misChats = new Dictionary<string, List<string>>();
+        //private Dictionary<string, List<String>> misChats = new Dictionary<string, List<string>>();
 
         public void transmitirHilo(string texto)
         {
@@ -62,9 +62,9 @@ namespace AppSocketsServer
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(recibidoString);
                             enviarMensajeAUser(objetoMensaje, recibidoString);
                             break;
-                        case "C":
-                            //Solo aplica para cliente
-                            break;
+                        //case "C":
+                        //    //Solo aplica para cliente
+                        //    break;
                         case "D":
                             desconectarUsuario(recibidoString);
                             break;
@@ -87,7 +87,7 @@ namespace AppSocketsServer
             {
                 string destino = objeto.usuarioDestino;
                 string emisor = objeto.usuarioOrigen;
-                gobernador.usernameToClassComunica[destino].transmitirHilo(objetoRecibidoString);
+                gobernador.usernameConectadosToClassComunica[destino].transmitirHilo(objetoRecibidoString);
             }
             catch (Exception ex)
             {
@@ -105,7 +105,7 @@ namespace AppSocketsServer
                 if (rpta)
                 {
                     this.myUsername = objetoLoginEnvio.usuario;
-                    conectados = gobernador.usernameToClassComunica.Keys.ToArray<string>();
+                    conectados = gobernador.usernameConectadosToClassComunica.Keys.ToArray<string>();
                     Console.WriteLine(conectados);
                     FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
@@ -129,11 +129,11 @@ namespace AppSocketsServer
         {
             FormatoNuevoUsuarioConectado fnuc = new FormatoNuevoUsuarioConectado(myUsername);
             string objectString = JsonConvert.SerializeObject(fnuc);
-            foreach (string key in gobernador.usernameToClassComunica.Keys)
+            foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
             {
                 if(key != myUsername)
                 {
-                    gobernador.usernameToClassComunica[key].transmitirHilo(objectString);
+                    gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
                 }
             }
         }
@@ -143,9 +143,9 @@ namespace AppSocketsServer
             try
             {
                 gobernador.desconectarUsuario(myUsername);
-                foreach (string key in gobernador.usernameToClassComunica.Keys)
+                foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
                 {
-                    gobernador.usernameToClassComunica[key].transmitirHilo(objectString);
+                    gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
                 }
             }
             catch(Exception ex)

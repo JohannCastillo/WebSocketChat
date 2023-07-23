@@ -9,11 +9,11 @@ namespace AppSocketsServer
     class ClassGeneral
     {
         private readonly static ClassGeneral _instancia = new ClassGeneral();
-        public Dictionary<string, ClassComunica> usernameToClassComunica = new Dictionary<string, ClassComunica>();
+        public Dictionary<string, ClassComunica> usernameConectadosToClassComunica = new Dictionary<string, ClassComunica>();
         private Dictionary<string, string> usuariosGuardados = new Dictionary<string, string>();
 
         //Aqui usar mejor una clase Chat (quizás tampoco se necesite esto)
-        public List<List<string>> chatsGuardados = new List<List<string>>();
+        //public List<List<string>> chatsGuardados = new List<List<string>>();
 
         private ClassGeneral()
         {
@@ -27,10 +27,15 @@ namespace AppSocketsServer
             usuariosGuardados.Add("angello", "admin");
             usuariosGuardados.Add("hiroshi", "admin");
 
-            usuariosGuardados.Add("juan", "user");
+            usuariosGuardados.Add("abraham", "user");
             usuariosGuardados.Add("martha", "user");
             usuariosGuardados.Add("carellano", "user");
-            usuariosGuardados.Add("jose", "user");
+            usuariosGuardados.Add("julio", "user");
+
+            usuariosGuardados.Add("willy", "user");
+            usuariosGuardados.Add("david", "user");
+            usuariosGuardados.Add("piero", "user");
+            usuariosGuardados.Add("jambri", "user");
         }
 
         public bool continuarComunicacion(string user, string passw, ClassComunica instanciaComunica)
@@ -41,9 +46,9 @@ namespace AppSocketsServer
                 rpta = usuariosGuardados[user] == passw;
                 if (rpta)
                 {
-                    if(usernameToClassComunica.Count <= 6)
+                    if(usernameConectadosToClassComunica.Count <= 6)
                     {
-                        usernameToClassComunica.Add(user, instanciaComunica);
+                        usernameConectadosToClassComunica.Add(user, instanciaComunica);
                     }else
                     {
                         rpta = false;
@@ -66,7 +71,7 @@ namespace AppSocketsServer
 
         public void desconectarUsuario(string user)
         {
-            usernameToClassComunica.Remove(user);
+            usernameConectadosToClassComunica.Remove(user);
         }
 
     }
