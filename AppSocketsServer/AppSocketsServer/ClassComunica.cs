@@ -98,19 +98,22 @@ namespace AppSocketsServer
 
         private void aceptarLogin(FormatoLoginEnvio objetoLoginEnvio)
         {
+            string[] conectados = { };
             try
             {
                 bool rpta = gobernador.continuarComunicacion(objetoLoginEnvio.usuario,objetoLoginEnvio.password, this);
                 if (rpta)
                 {
-                    myUsername = objetoLoginEnvio.usuario;
-                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1);
+                    this.myUsername = objetoLoginEnvio.usuario;
+                    conectados = gobernador.usernameToClassComunica.Keys.ToArray<string>();
+                    Console.WriteLine(conectados);
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
                     this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
                     avisarConexionUsuarioAOtros();
                 }else
                 {
-                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0);
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
                     this.transmitirHilo(serializado); //NO PERMITIR CHAT
                     //this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
