@@ -16,9 +16,10 @@ namespace AppSocketsClient.Forms
     {
         private UserSession userSession;
 
-        public FrmChat(UserSession userSession)
+        public FrmChat(UserSession userSession, Cliente cliente)
         {
             this.userSession = userSession;
+            cliente.NuevoUsuarioConectado += NuevoUsuarioConectado;
             InitializeComponent();
 
             loadContacts();
@@ -29,10 +30,26 @@ namespace AppSocketsClient.Forms
             foreach(string user in userSession.Users)
             {
                 if (user == userSession.Username) continue;
-                SelectFriendControl friend = new SelectFriendControl(pnlBase, user, userSession.OnlineUsers.Contains(user));
-                pnlContacts.Controls.Add(friend);
+                AddSelectFriendControlToPanel(user);
             }
         }
+
+        private void AddSelectFriendControlToPanel(string username)
+        {
+
+            SelectFriendControl friend = new SelectFriendControl(pnlBase, username, userSession.OnlineUsers.Contains(username));
+            pnlContacts.Controls.Add(friend);
+        }
+
+        private void NuevoUsuarioConectado (object sender, string username)
+        {
+            userSession.OnlineUsers.Add(username);
+            if(!userSession.Users.Contains(username)) userSession.Users.Add(username);
+            Invoke(new Action(() => {
+                AddSelectFriendControlToPanel(username);
+            }));
+        }
+
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
         {

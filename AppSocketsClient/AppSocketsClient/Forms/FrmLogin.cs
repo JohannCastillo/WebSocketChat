@@ -44,7 +44,7 @@ namespace AppSocketsClient.Forms
             
             Invoke(new Action(() =>
             {
-                FrmChat frmChat = new FrmChat(userSession);
+                FrmChat frmChat = new FrmChat(userSession, client);
                 frmChat.Show();
                 Hide();
             }));
