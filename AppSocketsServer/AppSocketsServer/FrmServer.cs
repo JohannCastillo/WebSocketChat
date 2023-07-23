@@ -59,17 +59,10 @@ namespace AppSocketsServer
                     objeto.socketComunica = socketPadre.Accept();
                     string received = objeto.socketComunica.RemoteEndPoint.ToString();
                     objeto.recibirHilo(received);
-                    //if (gobernador.usuariosConectados.Count < 6)
-                    //{
-                    //    gobernador.usuariosConectados.Add(objeto);
-                    //    //throw new Exception("Conexiones mayores a limite (10)");
-                    //}
-
-                    //this.Invoke(mostrarForm, received);
                 }
                 catch (Exception e)
                 {
-                    
+                    Console.WriteLine($"form exception listen: {e.Message}");
                 }
             }
 
