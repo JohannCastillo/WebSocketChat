@@ -92,6 +92,7 @@
             this.Name = "FrmChat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmChat";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmChat_FormClosing);
             this.pnlBase.ResumeLayout(false);
             this.pnlBase.PerformLayout();
             this.ResumeLayout(false);

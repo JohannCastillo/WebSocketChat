@@ -91,6 +91,9 @@ namespace AppSocketsClient.Helpers
                             else frmLogin.LoginFailed();
 
                             break;
+                        case "C":
+                            FormatoNuevoUsuarioConectado nuevoConectado = JsonConvert.DeserializeObject<FormatoNuevoUsuarioConectado>(stringRecibido);
+                            break;
                         case "M":
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(stringRecibido);
                            break;
