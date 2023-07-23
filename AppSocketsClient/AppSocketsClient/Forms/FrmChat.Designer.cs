@@ -32,7 +32,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlBase = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel1.SuspendLayout();
             this.pnlBase.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlContacts
@@ -40,19 +43,20 @@
             this.pnlContacts.AutoScroll = true;
             this.pnlContacts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlContacts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(35)))), ((int)(((byte)(43)))));
-            this.pnlContacts.Location = new System.Drawing.Point(4, 79);
+            this.pnlContacts.Location = new System.Drawing.Point(-5, 79);
             this.pnlContacts.Margin = new System.Windows.Forms.Padding(4);
             this.pnlContacts.Name = "pnlContacts";
-            this.pnlContacts.Size = new System.Drawing.Size(312, 614);
+            this.pnlContacts.Size = new System.Drawing.Size(321, 614);
             this.pnlContacts.TabIndex = 0;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(35)))), ((int)(((byte)(43)))));
-            this.panel1.Location = new System.Drawing.Point(4, 1);
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(29)))), ((int)(((byte)(36)))));
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(-5, 1);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1057, 79);
+            this.panel1.Size = new System.Drawing.Size(1066, 78);
             this.panel1.TabIndex = 3;
             // 
             // pnlBase
@@ -78,6 +82,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Seleccione un chat";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::AppSocketsClient.Properties.Resources.chat;
+            this.pictureBox1.Location = new System.Drawing.Point(17, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(59, 72);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -92,8 +106,10 @@
             this.Name = "FrmChat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmChat";
+            this.panel1.ResumeLayout(false);
             this.pnlBase.ResumeLayout(false);
             this.pnlBase.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -104,5 +120,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlBase;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -81,6 +81,8 @@ namespace AppSocketsClient.Helpers
 
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(stringRecibido);
 
+                    if (recibidoObject == null) continue;
+
                     switch (recibidoObject.tipo)
                     {
                         case (int)MensajeUtil.tipoMensaje.LoginRespuesta:

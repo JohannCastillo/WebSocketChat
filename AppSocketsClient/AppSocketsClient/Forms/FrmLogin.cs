@@ -22,7 +22,7 @@ namespace AppSocketsClient.Forms
             InitializeComponent();
 
             client = new Cliente(this);
-
+          
             conectarCliente();
         }
 
