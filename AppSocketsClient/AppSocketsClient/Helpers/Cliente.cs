@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.Json;
+
 
 namespace AppSocketsClient.Helpers
 {
@@ -48,17 +48,26 @@ namespace AppSocketsClient.Helpers
 
         private void recibe()
         {
-            arregloRecive = new byte[1024];
-            while (true)
-            {
 
-                cliente.Receive(arregloRecive);
-                MessageBox.Show(ASCIIEncoding.UTF8.GetString(arregloRecive));
+            arregloRecive = new byte[1024];
+            try
+            {
+                while (true)
+                {
+                    cliente.Receive(arregloRecive);
+                    MessageBox.Show(ASCIIEncoding.UTF8.GetString(arregloRecive));
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+          
 
         }
 
-        public void enviar(string mensaje) {
+        public void enviar(string mensaje)
+        {
             //var data = new
             //{
             //    tipo = tipo,
@@ -68,11 +77,20 @@ namespace AppSocketsClient.Helpers
 
             //string jsonString = JsonSerializer.Serialize(data);
 
-         
+
             //byte[] buffer = Encoding.UTF8.GetBytes(jsonString);
 
-         
-            //socketComunica.Send(buffer);
+            try
+            {
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                cliente.Send(msg);
+            }
+            catch (Exception ex)
+            {
+                   MessageBox.Show(ex.Message);
+            }
+  
+
         }
     }
 }

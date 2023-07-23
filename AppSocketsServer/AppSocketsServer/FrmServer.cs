@@ -22,19 +22,20 @@ namespace AppSocketsServer
         public Server()
         {
             InitializeComponent();
+
+            createServer();
         }
 
         public void createServer()
         {
             // establish the local end point for the socket 
-            IPHostEntry ipHost = Dns.Resolve("192.168.7.188");
+            IPHostEntry ipHost = Dns.Resolve("localhost");
             IPAddress ipAddr = ipHost.AddressList[0];
 
             ipEndPoint = new IPEndPoint(ipAddr, 13000); //colocar IPAdress.Any para 0.0.0.0
 
             // create a Tcp/Ip Socket 
-            socketPadre = new Socket(ipEndPoint.AddressFamily,
-                                          SocketType.Stream, ProtocolType.Tcp);
+            socketPadre = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             Thread listener = new Thread(listen);
             listener.Start();

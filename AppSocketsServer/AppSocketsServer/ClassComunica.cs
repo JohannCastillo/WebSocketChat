@@ -57,6 +57,7 @@ namespace AppSocketsServer
                     string recibido = Encoding.UTF8.GetString(buffer, 0, 1);
                     string user = recibido.Substring(1, 20).Trim();
                     string tipo = recibido.Substring(0, 1);
+       
                     switch (tipo)
                     {
                         case "M":
