@@ -49,6 +49,23 @@ namespace AppSocketsClient.Helpers
             return false; 
         }
 
+        public void desconectar ()
+        {
+            try
+            {
+                if (cliente != null && cliente.Connected)
+                {
+                    cliente.Shutdown(SocketShutdown.Both);
+                    cliente.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción que pueda ocurrir al desconectar
+                Console.WriteLine("error " + ex.Message);
+            }
+        }
+
         private void recibe()
         {
             try
@@ -85,7 +102,7 @@ namespace AppSocketsClient.Helpers
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("recibiendo: " + ex.Message);
             }
           
 

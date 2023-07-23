@@ -83,5 +83,9 @@ namespace AppSocketsClient.Forms
             }
         }
 
+        private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            client.desconectar();
+        }
     }
 }
