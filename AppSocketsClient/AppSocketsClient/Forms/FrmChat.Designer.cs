@@ -41,7 +41,7 @@
             this.pnlContacts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlContacts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(35)))), ((int)(((byte)(43)))));
             this.pnlContacts.Location = new System.Drawing.Point(4, 79);
-            this.pnlContacts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlContacts.Margin = new System.Windows.Forms.Padding(4);
             this.pnlContacts.Name = "pnlContacts";
             this.pnlContacts.Size = new System.Drawing.Size(312, 614);
             this.pnlContacts.TabIndex = 0;
@@ -50,7 +50,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(35)))), ((int)(((byte)(43)))));
             this.panel1.Location = new System.Drawing.Point(4, 1);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1057, 79);
             this.panel1.TabIndex = 3;
@@ -61,7 +61,7 @@
             this.pnlBase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(37)))));
             this.pnlBase.Controls.Add(this.label1);
             this.pnlBase.Location = new System.Drawing.Point(311, 79);
-            this.pnlBase.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlBase.Margin = new System.Windows.Forms.Padding(4);
             this.pnlBase.Name = "pnlBase";
             this.pnlBase.Size = new System.Drawing.Size(750, 614);
             this.pnlBase.TabIndex = 4;
@@ -88,7 +88,7 @@
             this.Controls.Add(this.pnlContacts);
             this.Controls.Add(this.pnlBase);
             this.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmChat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmChat";

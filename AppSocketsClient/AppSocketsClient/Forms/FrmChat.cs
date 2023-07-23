@@ -1,4 +1,5 @@
 ﻿using AppSocketsClient.Components;
+using AppSocketsClient.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,25 +14,25 @@ namespace AppSocketsClient.Forms
 {
     public partial class FrmChat : Form
     {
-        
-             
-        public FrmChat()
+        private UserSession userSession;
+
+        public FrmChat(UserSession userSession)
         {
+            this.userSession = userSession;
             InitializeComponent();
 
             loadContacts();
         }
 
         private void loadContacts() { 
-            // Se llenan todos los usuarios con bucle, esto es solo de prueba, funciona
-            SelectFriendControl friend = new SelectFriendControl(pnlBase, "Johann");
 
-            pnlContacts.Controls.Add(friend);
-
-            SelectFriendControl friend2 = new SelectFriendControl(pnlBase, "Bruno");
-
-            pnlContacts.Controls.Add(friend2);
-
+            foreach(string onlineUser in userSession.OnlineUsers)
+            {
+                if (onlineUser == userSession.Username) continue;
+                SelectFriendControl friend = new SelectFriendControl(pnlBase, onlineUser);
+                pnlContacts.Controls.Add(friend);
+            }
         }
+
     }
 }

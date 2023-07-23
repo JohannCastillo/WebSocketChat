@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 //Añadidos
 using Newtonsoft.Json;
-
+using AppSocketsClient.Forms;
 
 namespace AppSocketsClient.Helpers
 {
@@ -22,10 +22,11 @@ namespace AppSocketsClient.Helpers
 
         private Thread recepcionando;
         private byte[] arregloRecive;
+        private FrmLogin frmLogin;
 
-        public Cliente()
+        public Cliente(FrmLogin frmLogin)
         {
-           
+            this.frmLogin = frmLogin;
         }
 
         public bool conectar() {
@@ -57,9 +58,29 @@ namespace AppSocketsClient.Helpers
                     arregloRecive = new byte[1024];
                     cliente.Receive(arregloRecive);
                     string stringRecibido = ASCIIEncoding.UTF8.GetString(arregloRecive);
-                    MessageBox.Show(stringRecibido);
-                    FormatoLoginRespuesta objetoRpta = JsonConvert.DeserializeObject<FormatoLoginRespuesta>(stringRecibido);
-                    MessageBox.Show("a: "+objetoRpta.tipo +"\nb: "+objetoRpta.usuario+"\nc: "+objetoRpta.estado);
+
+                    FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(stringRecibido);
+
+                    switch(recibidoObject.tipo)
+                    {
+                        case "L":
+                            FormatoLoginRespuesta objetoLoginRpta = JsonConvert.DeserializeObject<FormatoLoginRespuesta>(stringRecibido);
+                            
+                            if(objetoLoginRpta.estado == 1)
+                            {
+                                UserSession userSession = new UserSession(objetoLoginRpta.usuario, objetoLoginRpta.conectados);
+                                frmLogin.LoginSucceed(userSession);
+                            }
+                            else frmLogin.LoginFailed();
+
+                            break;
+                        case "M":
+                            FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(stringRecibido);
+                           break;
+
+                    }
+
+
                 }
             }
             catch (Exception ex)

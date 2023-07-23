@@ -46,10 +46,10 @@
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Century Gothic", 13F);
             this.txtPassword.ForeColor = System.Drawing.Color.FloralWhite;
-            this.txtPassword.Location = new System.Drawing.Point(95, 391);
+            this.txtPassword.Location = new System.Drawing.Point(95, 415);
             this.txtPassword.MinimumSize = new System.Drawing.Size(2, 40);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(329, 40);
+            this.txtPassword.Size = new System.Drawing.Size(329, 34);
             this.txtPassword.TabIndex = 5;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
@@ -59,10 +59,10 @@
             this.txtUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUser.Font = new System.Drawing.Font("Century Gothic", 13F);
             this.txtUser.ForeColor = System.Drawing.Color.FloralWhite;
-            this.txtUser.Location = new System.Drawing.Point(95, 296);
+            this.txtUser.Location = new System.Drawing.Point(95, 314);
             this.txtUser.MinimumSize = new System.Drawing.Size(2, 40);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(329, 40);
+            this.txtUser.Size = new System.Drawing.Size(329, 34);
             this.txtUser.TabIndex = 4;
             // 
             // btnLogin
@@ -70,11 +70,11 @@
             this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnLogin.FlatAppearance.BorderSize = 0;
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLogin.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.ForeColor = System.Drawing.Color.MintCream;
-            this.btnLogin.Location = new System.Drawing.Point(114, 495);
+            this.btnLogin.Location = new System.Drawing.Point(114, 526);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(283, 54);
+            this.btnLogin.Size = new System.Drawing.Size(283, 57);
             this.btnLogin.TabIndex = 20;
             this.btnLogin.Text = "Iniciar Sesión";
             this.btnLogin.UseVisualStyleBackColor = false;
@@ -84,9 +84,9 @@
             // 
             this.lblUserError.AutoSize = true;
             this.lblUserError.ForeColor = System.Drawing.Color.IndianRed;
-            this.lblUserError.Location = new System.Drawing.Point(92, 339);
+            this.lblUserError.Location = new System.Drawing.Point(92, 360);
             this.lblUserError.Name = "lblUserError";
-            this.lblUserError.Size = new System.Drawing.Size(119, 16);
+            this.lblUserError.Size = new System.Drawing.Size(128, 17);
             this.lblUserError.TabIndex = 22;
             this.lblUserError.Text = "Usuario incorrecto ";
             this.lblUserError.Visible = false;
@@ -95,9 +95,9 @@
             // 
             this.lblPasswordError.AutoSize = true;
             this.lblPasswordError.ForeColor = System.Drawing.Color.IndianRed;
-            this.lblPasswordError.Location = new System.Drawing.Point(92, 431);
+            this.lblPasswordError.Location = new System.Drawing.Point(92, 458);
             this.lblPasswordError.Name = "lblPasswordError";
-            this.lblPasswordError.Size = new System.Drawing.Size(145, 16);
+            this.lblPasswordError.Size = new System.Drawing.Size(159, 17);
             this.lblPasswordError.TabIndex = 23;
             this.lblPasswordError.Text = "Constraseña incorrecta";
             this.lblPasswordError.Visible = false;
@@ -107,7 +107,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.MintCream;
-            this.label1.Location = new System.Drawing.Point(90, 264);
+            this.label1.Location = new System.Drawing.Point(90, 280);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 25);
             this.label1.TabIndex = 24;
@@ -118,7 +118,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.MintCream;
-            this.label2.Location = new System.Drawing.Point(90, 363);
+            this.label2.Location = new System.Drawing.Point(90, 386);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(124, 25);
             this.label2.TabIndex = 25;
@@ -127,26 +127,26 @@
             // label3
             // 
             this.label3.Image = global::AppSocketsClient.Properties.Resources.chat;
-            this.label3.Location = new System.Drawing.Point(158, 77);
+            this.label3.Location = new System.Drawing.Point(158, 82);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(215, 162);
+            this.label3.Size = new System.Drawing.Size(215, 172);
             this.label3.TabIndex = 26;
             // 
             // lblConnectionState
             // 
             this.lblConnectionState.AutoSize = true;
             this.lblConnectionState.ForeColor = System.Drawing.Color.White;
-            this.lblConnectionState.Location = new System.Drawing.Point(12, 578);
+            this.lblConnectionState.Location = new System.Drawing.Point(12, 614);
             this.lblConnectionState.Name = "lblConnectionState";
-            this.lblConnectionState.Size = new System.Drawing.Size(227, 16);
+            this.lblConnectionState.Size = new System.Drawing.Size(257, 17);
             this.lblConnectionState.TabIndex = 27;
             this.lblConnectionState.Text = "Intentando conectar con el servidor ...";
             // 
             // btnTry
             // 
-            this.btnTry.Location = new System.Drawing.Point(255, 574);
+            this.btnTry.Location = new System.Drawing.Point(275, 609);
             this.btnTry.Name = "btnTry";
-            this.btnTry.Size = new System.Drawing.Size(151, 25);
+            this.btnTry.Size = new System.Drawing.Size(151, 27);
             this.btnTry.TabIndex = 28;
             this.btnTry.Text = "Intentar de nuevo";
             this.btnTry.UseVisualStyleBackColor = true;
@@ -154,10 +154,10 @@
             // 
             // FrmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(30)))), ((int)(((byte)(36)))));
-            this.ClientSize = new System.Drawing.Size(510, 608);
+            this.ClientSize = new System.Drawing.Size(510, 646);
             this.Controls.Add(this.btnTry);
             this.Controls.Add(this.lblConnectionState);
             this.Controls.Add(this.label3);
@@ -168,6 +168,7 @@
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUser);
+            this.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmLogin";
