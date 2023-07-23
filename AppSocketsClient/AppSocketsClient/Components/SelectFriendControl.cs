@@ -13,9 +13,11 @@ namespace AppSocketsClient.Components
 {
     public partial class SelectFriendControl : UserControl
     {
-        private Panel pnlBase;
-        private string username;
-        public SelectFriendControl(Panel pnlBase, string username)
+        private readonly Panel pnlBase;
+        private readonly string username;
+        private readonly string lastMessage;
+        private readonly bool isOnline;
+        public SelectFriendControl(Panel pnlBase, string username, string lastMessage = "quien sos", bool isOnline = true)
         {
             InitializeComponent();
             
@@ -23,6 +25,12 @@ namespace AppSocketsClient.Components
 
             this.username = username;
             lblUserName.Text = username;
+
+            this.lastMessage = lastMessage;
+            lblLastMessage.Text = lastMessage;
+
+            this.isOnline = isOnline;
+            lblIsOnline.Visible = isOnline;
         }
 
         private void pnlFriend_Click(object sender, EventArgs e)

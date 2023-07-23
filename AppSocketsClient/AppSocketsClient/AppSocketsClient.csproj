@@ -52,6 +52,18 @@
     <Compile Include="Components\ChatControl.Designer.cs">
       <DependentUpon>ChatControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\FriendMessageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\FriendMessageControl.Designer.cs">
+      <DependentUpon>FriendMessageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\OwnMessageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\OwnMessageControl.Designer.cs">
+      <DependentUpon>OwnMessageControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\SelectFriendControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,11 +88,18 @@
     <Compile Include="FrmCliente.Designer.cs">
       <DependentUpon>FrmCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ChatHelper.cs" />
     <Compile Include="Helpers\Cliente.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Components\ChatControl.resx">
       <DependentUpon>ChatControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\FriendMessageControl.resx">
+      <DependentUpon>FriendMessageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\OwnMessageControl.resx">
+      <DependentUpon>OwnMessageControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\SelectFriendControl.resx">
       <DependentUpon>SelectFriendControl.cs</DependentUpon>
@@ -120,6 +139,8 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\chat.png" />
+    <None Include="Assets\send.png" />
+    <None Include="Assets\green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -26,10 +26,10 @@ namespace AppSocketsClient.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            client.enviar("L"+txtUser.Text+txtPassword.Text);
-            //FrmChat frm = new FrmChat();
-            //frm.Show();
-            //this.Hide();
+            //client.enviar("L"+txtUser.Text+txtPassword.Text);
+            FrmChat frm = new FrmChat();
+            frm.Show();
+            this.Hide();
         }
 
         private void btnTry_Click(object sender, EventArgs e)

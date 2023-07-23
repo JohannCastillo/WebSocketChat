@@ -30,11 +30,12 @@
         {
             this.pnlChatLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlFriend = new System.Windows.Forms.Panel();
+            this.lblFriend = new System.Windows.Forms.Label();
             this.pnlChat = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnEnviar = new System.Windows.Forms.Button();
             this.txtMensaje = new System.Windows.Forms.TextBox();
-            this.lblFriend = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnEnviar = new System.Windows.Forms.Button();
             this.pnlChatLayout.SuspendLayout();
             this.pnlFriend.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -45,79 +46,106 @@
             this.pnlChatLayout.Controls.Add(this.pnlFriend);
             this.pnlChatLayout.Controls.Add(this.pnlChat);
             this.pnlChatLayout.Controls.Add(this.panel3);
-            this.pnlChatLayout.Location = new System.Drawing.Point(3, 0);
-            this.pnlChatLayout.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.pnlChatLayout.Location = new System.Drawing.Point(4, 0);
+            this.pnlChatLayout.Margin = new System.Windows.Forms.Padding(4, 0, 4, 4);
             this.pnlChatLayout.Name = "pnlChatLayout";
-            this.pnlChatLayout.Size = new System.Drawing.Size(728, 607);
+            this.pnlChatLayout.Size = new System.Drawing.Size(734, 604);
             this.pnlChatLayout.TabIndex = 5;
+            this.pnlChatLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlChatLayout_Paint);
             // 
             // pnlFriend
             // 
             this.pnlFriend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(23)))), ((int)(((byte)(28)))));
+            this.pnlFriend.Controls.Add(this.label1);
             this.pnlFriend.Controls.Add(this.lblFriend);
-            this.pnlFriend.Location = new System.Drawing.Point(3, 0);
-            this.pnlFriend.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.pnlFriend.Location = new System.Drawing.Point(4, 0);
+            this.pnlFriend.Margin = new System.Windows.Forms.Padding(4, 0, 4, 4);
             this.pnlFriend.Name = "pnlFriend";
-            this.pnlFriend.Size = new System.Drawing.Size(725, 56);
+            this.pnlFriend.Size = new System.Drawing.Size(726, 52);
             this.pnlFriend.TabIndex = 2;
+            // 
+            // lblFriend
+            // 
+            this.lblFriend.AutoSize = true;
+            this.lblFriend.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFriend.ForeColor = System.Drawing.Color.White;
+            this.lblFriend.Location = new System.Drawing.Point(194, 14);
+            this.lblFriend.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFriend.Name = "lblFriend";
+            this.lblFriend.Size = new System.Drawing.Size(60, 19);
+            this.lblFriend.TabIndex = 0;
+            this.lblFriend.Text = "label1";
             // 
             // pnlChat
             // 
+            this.pnlChat.AutoScroll = true;
             this.pnlChat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(37)))));
-            this.pnlChat.Location = new System.Drawing.Point(3, 62);
+            this.pnlChat.Location = new System.Drawing.Point(4, 60);
+            this.pnlChat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlChat.Name = "pnlChat";
-            this.pnlChat.Size = new System.Drawing.Size(725, 482);
+            this.pnlChat.Size = new System.Drawing.Size(722, 464);
             this.pnlChat.TabIndex = 1;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.btnEnviar);
             this.panel3.Controls.Add(this.txtMensaje);
-            this.panel3.Location = new System.Drawing.Point(3, 550);
+            this.panel3.Location = new System.Drawing.Point(4, 532);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(725, 46);
+            this.panel3.Size = new System.Drawing.Size(722, 60);
             this.panel3.TabIndex = 4;
-            // 
-            // btnEnviar
-            // 
-            this.btnEnviar.Location = new System.Drawing.Point(669, 3);
-            this.btnEnviar.Name = "btnEnviar";
-            this.btnEnviar.Size = new System.Drawing.Size(53, 40);
-            this.btnEnviar.TabIndex = 4;
-            this.btnEnviar.Text = "S";
-            this.btnEnviar.UseVisualStyleBackColor = true;
             // 
             // txtMensaje
             // 
             this.txtMensaje.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(31)))));
             this.txtMensaje.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMensaje.ForeColor = System.Drawing.SystemColors.Window;
-            this.txtMensaje.Location = new System.Drawing.Point(3, 3);
+            this.txtMensaje.Location = new System.Drawing.Point(4, 4);
+            this.txtMensaje.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtMensaje.MaxLength = 32000;
             this.txtMensaje.Multiline = true;
             this.txtMensaje.Name = "txtMensaje";
             this.txtMensaje.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMensaje.Size = new System.Drawing.Size(660, 41);
+            this.txtMensaje.Size = new System.Drawing.Size(653, 53);
             this.txtMensaje.TabIndex = 3;
+            this.txtMensaje.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMensaje_KeyDown);
             // 
-            // lblFriend
+            // label1
             // 
-            this.lblFriend.AutoSize = true;
-            this.lblFriend.ForeColor = System.Drawing.Color.White;
-            this.lblFriend.Location = new System.Drawing.Point(23, 17);
-            this.lblFriend.Name = "lblFriend";
-            this.lblFriend.Size = new System.Drawing.Size(44, 16);
-            this.lblFriend.TabIndex = 0;
-            this.lblFriend.Text = "label1";
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(29, 12);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 21);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Conversando con ";
+            // 
+            // btnEnviar
+            // 
+            this.btnEnviar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(252)))), ((int)(((byte)(138)))));
+            this.btnEnviar.BackgroundImage = global::AppSocketsClient.Properties.Resources.send;
+            this.btnEnviar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnEnviar.FlatAppearance.BorderSize = 0;
+            this.btnEnviar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEnviar.Location = new System.Drawing.Point(664, 3);
+            this.btnEnviar.Name = "btnEnviar";
+            this.btnEnviar.Size = new System.Drawing.Size(55, 53);
+            this.btnEnviar.TabIndex = 3;
+            this.btnEnviar.UseVisualStyleBackColor = false;
+            this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
             // 
             // ChatControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(37)))));
             this.Controls.Add(this.pnlChatLayout);
+            this.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ChatControl";
-            this.Size = new System.Drawing.Size(734, 610);
+            this.Size = new System.Drawing.Size(734, 604);
             this.pnlChatLayout.ResumeLayout(false);
             this.pnlFriend.ResumeLayout(false);
             this.pnlFriend.PerformLayout();
@@ -133,8 +161,9 @@
         private System.Windows.Forms.Panel pnlFriend;
         private System.Windows.Forms.FlowLayoutPanel pnlChat;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button btnEnviar;
         private System.Windows.Forms.TextBox txtMensaje;
         private System.Windows.Forms.Label lblFriend;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnEnviar;
     }
 }
