@@ -39,10 +39,20 @@ namespace AppSocketsServer
 
         private void transmitir(string jsonStringified)
         {
-            byte[] messageBytes = Encoding.UTF8.GetBytes(jsonStringified);
-            socketComunica.Send(messageBytes, SocketFlags.None);
-            Console.WriteLine($"Socket client sent message: \"{jsonStringified}\"");
+            try
+            {
+                byte[] messageBytes = Encoding.UTF8.GetBytes(jsonStringified);
+                socketComunica.Send(messageBytes, SocketFlags.None);
+                Console.WriteLine($"Socket client sent message: \"{jsonStringified}\"");
+            }
+            catch (SocketException ex)
+            {
+                // Manejar la excepción
+                Console.WriteLine($"Socket exception transmitiendo: {ex.Message}");
+                // También puedes cerrar el socket u otras acciones necesarias
+            }
         }
+
 
         private void recibir()
         {

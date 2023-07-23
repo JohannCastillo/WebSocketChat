@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectFriendControl));
             this.pnlFriend = new System.Windows.Forms.Panel();
             this.lblIsOnline = new System.Windows.Forms.Label();
-            this.lblLastMessage = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
             this.pnlFriend.SuspendLayout();
             this.SuspendLayout();
@@ -40,14 +39,13 @@
             // 
             this.pnlFriend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(29)))), ((int)(((byte)(36)))));
             this.pnlFriend.Controls.Add(this.lblIsOnline);
-            this.pnlFriend.Controls.Add(this.lblLastMessage);
             this.pnlFriend.Controls.Add(this.lblUserName);
             this.pnlFriend.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pnlFriend.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlFriend.ForeColor = System.Drawing.Color.White;
             this.pnlFriend.Location = new System.Drawing.Point(13, 3);
             this.pnlFriend.Name = "pnlFriend";
-            this.pnlFriend.Size = new System.Drawing.Size(281, 92);
+            this.pnlFriend.Size = new System.Drawing.Size(281, 53);
             this.pnlFriend.TabIndex = 0;
             this.pnlFriend.Click += new System.EventHandler(this.pnlFriend_Click);
             // 
@@ -61,15 +59,6 @@
             this.lblIsOnline.Size = new System.Drawing.Size(35, 32);
             this.lblIsOnline.TabIndex = 2;
             this.lblIsOnline.Text = "   ";
-            // 
-            // lblLastMessage
-            // 
-            this.lblLastMessage.AutoSize = true;
-            this.lblLastMessage.Location = new System.Drawing.Point(19, 46);
-            this.lblLastMessage.Name = "lblLastMessage";
-            this.lblLastMessage.Size = new System.Drawing.Size(171, 21);
-            this.lblLastMessage.TabIndex = 1;
-            this.lblLastMessage.Text = "Maybe next week?";
             // 
             // lblUserName
             // 
@@ -89,7 +78,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(35)))), ((int)(((byte)(43)))));
             this.Controls.Add(this.pnlFriend);
             this.Name = "SelectFriendControl";
-            this.Size = new System.Drawing.Size(297, 98);
+            this.Size = new System.Drawing.Size(297, 61);
             this.pnlFriend.ResumeLayout(false);
             this.pnlFriend.PerformLayout();
             this.ResumeLayout(false);
@@ -100,7 +89,6 @@
 
         private System.Windows.Forms.Panel pnlFriend;
         private System.Windows.Forms.Label lblUserName;
-        private System.Windows.Forms.Label lblLastMessage;
         private System.Windows.Forms.Label lblIsOnline;
     }
 }
