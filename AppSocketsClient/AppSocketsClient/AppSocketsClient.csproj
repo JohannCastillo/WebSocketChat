@@ -92,9 +92,10 @@
     <Compile Include="FrmCliente.Designer.cs">
       <DependentUpon>FrmCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ChatHelper.cs" />
+    <Compile Include="Helpers\ChatControlHelper.cs" />
     <Compile Include="Helpers\Cliente.cs" />
     <Compile Include="Helpers\FormatosMsg.cs" />
+    <Compile Include="Helpers\UserSession.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Components\ChatControl.resx">

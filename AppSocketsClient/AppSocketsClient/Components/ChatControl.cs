@@ -14,13 +14,13 @@ namespace AppSocketsClient.Components
     public partial class ChatControl : UserControl
     {
         private string friend;
-        private readonly ChatHelper ch;
+        private readonly ChatControlHelper ch;
         public ChatControl(string friend)
         {
             InitializeComponent();
             this.friend = friend;
             lblFriend.Text = friend;
-            ch = new ChatHelper();
+            ch = new ChatControlHelper();
             ch.Inicializa(pnlChat);
         }
 

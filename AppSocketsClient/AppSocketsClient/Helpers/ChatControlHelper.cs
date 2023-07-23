@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace AppSocketsClient.Helpers
 {
-    internal class ChatHelper
+    internal class ChatControlHelper
     {
         private FlowLayoutPanel pnlMessages;
 
