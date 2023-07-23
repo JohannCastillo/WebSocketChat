@@ -20,6 +20,17 @@ namespace AppSocketsClient.Components
             lblFriend.Text = friend;
         }
 
-        public string Friend { get => friend; set => friend = value; }
+        public string Friend
+        {
+            get
+            {
+                return friend;
+            }
+
+            set
+            {
+                friend = value;
+            }
+        }
     }
 }
