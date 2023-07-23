@@ -110,7 +110,7 @@ namespace AppSocketsServer
                 {
                     FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
-                    this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
+                    this.transmitirHilo(serializado); //NO PERMITIR CHAT
                     //this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
                 }
             }
