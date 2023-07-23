@@ -51,8 +51,8 @@ namespace AppSocketsClient.Components
         private void pnlChatLayout_Paint(object sender, PaintEventArgs e)
         {
 
-            ch.AddOwnControl("Buenas tardes");
-            ch.AddFriendControl("Que tal", "Johann");
+            //ch.AddOwnControl("Buenas tardes");
+            //ch.AddFriendControl("Que tal", "Johann");
 
             if(pnlChat.Controls.Count > 0)
             {

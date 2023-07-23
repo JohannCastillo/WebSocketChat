@@ -17,6 +17,10 @@ namespace AppSocketsClient.Components
         private readonly Panel pnlBase;
         private readonly string username;
         private readonly bool isOnline;
+
+        //Almacenar chatControl ya añadidos al panel
+        private static Dictionary<string, ChatControl> chatControls = new Dictionary<string, ChatControl>();
+
         public SelectFriendControl(Panel pnlBase, string username, bool isOnline = true)
         {
             InitializeComponent();
@@ -30,10 +34,24 @@ namespace AppSocketsClient.Components
             lblIsOnline.Visible = isOnline;
         }
 
+        public string Username
+        {
+            get { return username; }
+        }
+
         private void pnlFriend_Click(object sender, EventArgs e)
         {
-            ChatControl chatControl = new ChatControl(username);
-            pnlBase.Controls.Add(chatControl);
+            ChatControl chatControl;
+            if (!chatControls.ContainsKey(Username))
+            {
+                chatControl = new ChatControl(Username);
+                chatControls[Username] = chatControl;
+                pnlBase.Controls.Add(chatControl);
+            }
+            else
+            {
+                chatControl = chatControls[Username];
+            }
             chatControl.BringToFront();
         }
     }

@@ -13,6 +13,7 @@ using AppSocketsClient.Forms;
 
 namespace AppSocketsClient.Helpers
 {
+    //CLIENTE ORIGINAL
     internal class Cliente
     {
         private Socket cliente;
