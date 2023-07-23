@@ -56,9 +56,9 @@ namespace AppSocketsServer
 
         private void recibir()
         {
-            while (true)
+            try
             {
-                try
+                while (true)
                 {
                     // Receive ack.
                     byte[] buffer = new byte[1024];
@@ -69,7 +69,7 @@ namespace AppSocketsServer
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(recibidoString);
 
                     if (recibidoObject == null) continue;
-                 
+
                     switch (recibidoObject.tipo)
                     {
                         case (int)MensajeUtil.tipoMensaje.Mensaje:
@@ -88,10 +88,18 @@ namespace AppSocketsServer
                             break;
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"server recibir comunica: {ex.Message}");
-                }
+            }
+            catch (Exception ex)
+            {
+                //si ocurre error, dejar de escuchar y cerrar (principalmente porque otro no existe)
+                Console.WriteLine($"server recibir comunica: {ex.Message}");
+                Console.WriteLine($"classComunica de {myUsername} procede a cerrar");
+                socketComunica.Shutdown(SocketShutdown.Both);
+                socketComunica.Close();
+
+                FormatoUsuarioDesconectado fud = new FormatoUsuarioDesconectado(myUsername);
+                string fudString = JsonConvert.SerializeObject(fud);
+                desconectarUsuario(fudString);
             }
         }
 
@@ -100,7 +108,6 @@ namespace AppSocketsServer
             try
             {
                 string destino = objeto.usuarioDestino;
-                string emisor = objeto.usuarioOrigen;
                 gobernador.usernameConectadosToClassComunica[destino].transmitirHilo(objetoRecibidoString);
             }
             catch (Exception ex)
