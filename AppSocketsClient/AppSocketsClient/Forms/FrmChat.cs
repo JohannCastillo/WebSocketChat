@@ -15,11 +15,14 @@ namespace AppSocketsClient.Forms
     public partial class FrmChat : Form
     {
         private UserSession userSession;
+        private Cliente cliente;
 
         public FrmChat(UserSession userSession, Cliente cliente)
         {
             this.userSession = userSession;
+            this.cliente = cliente; 
             cliente.NuevoUsuarioConectado += NuevoUsuarioConectado;
+            cliente.UsuarioDesconectado += UsuarioDesconectado;
             InitializeComponent();
 
             loadContacts();
@@ -41,6 +44,13 @@ namespace AppSocketsClient.Forms
             pnlContacts.Controls.Add(friend);
         }
 
+        private void SetOfflineToControl (string username)
+        {
+
+            SelectFriendControl friend = pnlContacts.Controls.OfType<SelectFriendControl>().FirstOrDefault(control => control.Username == username);
+            friend.IsOnline = false;
+        }
+
         private void NuevoUsuarioConectado (object sender, string username)
         {
             userSession.OnlineUsers.Add(username);
@@ -50,9 +60,19 @@ namespace AppSocketsClient.Forms
             }));
         }
 
+        private void UsuarioDesconectado(object sender, string username)
+        {
+            Invoke(new Action(() => {
+                SetOfflineToControl(username);
+            }));
+        }
+
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
         {
+            cliente.DesconectarUsuario(userSession.Username);
+
+
             // Crea una lista de formularios ocultos
             List<Form> formulariosOcultos = new List<Form>();
 
