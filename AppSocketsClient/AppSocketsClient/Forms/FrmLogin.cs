@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//Añadidos
+using Newtonsoft.Json;
 
 namespace AppSocketsClient.Forms
 {
@@ -26,10 +28,14 @@ namespace AppSocketsClient.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //client.enviar("L"+txtUser.Text+txtPassword.Text);
-            FrmChat frm = new FrmChat();
-            frm.Show();
-            this.Hide();
+            string usuario = txtUser.Text.Trim();
+            string password = txtPassword.Text.Trim();
+            FormatoLoginEnvio objetoLoginEnvio = new FormatoLoginEnvio(usuario, password);
+            string objetoStringify = JsonConvert.SerializeObject(objetoLoginEnvio);
+            client.enviar(objetoStringify);
+            //FrmChat frm = new FrmChat();
+            //frm.Show();
+            //this.Hide();
         }
 
         private void btnTry_Click(object sender, EventArgs e)

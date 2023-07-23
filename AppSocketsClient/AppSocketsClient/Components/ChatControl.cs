@@ -24,7 +24,7 @@ namespace AppSocketsClient.Components
             ch.Inicializa(pnlChat);
         }
 
-        public string Friend { get => friend; set => friend = value; }
+        public string Friend { get { return friend}; set { friend = value; } }
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
