@@ -13,8 +13,7 @@ using AppSocketsClient.Forms;
 
 namespace AppSocketsClient.Helpers
 {
-    //CLIENTE ORIGINAL
-    internal class Cliente
+    public class Cliente
     {
         private Socket cliente;
         private IPAddress ipServidor;
@@ -25,6 +24,8 @@ namespace AppSocketsClient.Helpers
         private byte[] arregloRecive;
         private FrmLogin frmLogin;
 
+        public delegate void NuevoUsuarioConectadoHandler(object sender, string username);
+        public event NuevoUsuarioConectadoHandler NuevoUsuarioConectado;
 
 
         public Cliente(FrmLogin frmLogin)
@@ -83,7 +84,6 @@ namespace AppSocketsClient.Helpers
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(stringRecibido);
 
                     if (recibidoObject == null) continue;
-
                     switch (recibidoObject.tipo)
                     {
                         case (int)MensajeUtil.tipoMensaje.LoginRespuesta:
@@ -96,6 +96,11 @@ namespace AppSocketsClient.Helpers
                             }
                             else frmLogin.LoginFailed();
 
+                            break;
+
+                        case (int)MensajeUtil.tipoMensaje.UsuarioConectado:
+                            FormatoNuevoUsuarioConectado nuevo = JsonConvert.DeserializeObject<FormatoNuevoUsuarioConectado>(stringRecibido);
+                            OnNuevoUsuarioConectado(nuevo.usuario);
                             break;
                         case (int)MensajeUtil.tipoMensaje.Mensaje:
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(stringRecibido);
@@ -117,18 +122,6 @@ namespace AppSocketsClient.Helpers
 
         public void enviar(string mensaje)
         {
-            //var data = new
-            //{
-            //    tipo = tipo,
-            //    user = user,
-            //    mensaje = mensaje
-            //};
-
-            //string jsonString = JsonSerializer.Serialize(data);
-
-
-            //byte[] buffer = Encoding.UTF8.GetBytes(jsonString);
-
             try
             {
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
@@ -138,8 +131,12 @@ namespace AppSocketsClient.Helpers
             {
                    MessageBox.Show(ex.Message);
             }
-  
+        }
 
+        protected virtual void OnNuevoUsuarioConectado (string username)
+        {
+            if (NuevoUsuarioConectado == null) return;
+            NuevoUsuarioConectado(this, username);
         }
     }
 }
