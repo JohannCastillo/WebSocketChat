@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace AppSocketsServer
 {
@@ -21,9 +22,9 @@ namespace AppSocketsServer
         //Aquí se puede usar mejor una clase Chat (este sí se debería usar)
         private Dictionary<string, List<String>> misChats = new Dictionary<string, List<string>>();
 
-        public void transmitirHilo(string tipo, string user, string msg)
+        public void transmitirHilo(string texto)
         {
-            Thread enviar = new Thread(() => transmitir(tipo, user, msg));
+            Thread enviar = new Thread(() => transmitir(texto));
             enviar.Start();
         }
 
@@ -34,12 +35,11 @@ namespace AppSocketsServer
             rec.Start();
         }
 
-        private void transmitir(string tipo, string user, string msg)
+        private void transmitir(string jsonStringified)
         {
-            string message = tipo + user.PadRight(20) + msg;
-            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(jsonStringified);
             socketComunica.Send(messageBytes, SocketFlags.None);
-            Console.WriteLine($"Socket client sent message: \"{message}\"");
+            Console.WriteLine($"Socket client sent message: \"{jsonStringified}\"");
         }
 
         private void recibir()
@@ -54,23 +54,22 @@ namespace AppSocketsServer
                     //var bufferRecibido =
                     socketComunica.Receive(buffer, SocketFlags.None);
 
-                    string recibido = Encoding.UTF8.GetString(buffer, 0, 1);
-                    string user = recibido.Substring(1, 20).Trim();
-                    string tipo = recibido.Substring(0, 1);
-       
-                    switch (tipo)
+                    string recibidoString = Encoding.UTF8.GetString(buffer);
+                    FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(recibidoString);
+                    
+                    switch (recibidoObject.tipo)
                     {
                         case "M":
-                            string mensaje = recibido.Substring(21);
-                            enviarMensajeAUser(user, mensaje);
+                            FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(recibidoString);
+                            enviarMensajeAUser(objetoMensaje, recibidoString);
                             break;
-                        case "A":
+                        case "C":
                             break;
-                        case "R":
+                        case "D":
                             break;
                         case "L":
-                            string password = recibido.Substring(21);
-                            aceptarLogin(user, password);
+                            FormatoLoginEnvio objetoLoginEnvio = JsonConvert.DeserializeObject<FormatoLoginEnvio>(recibidoString);
+                            aceptarLogin(objetoLoginEnvio);
                             break;
                     }
                 }
@@ -81,13 +80,13 @@ namespace AppSocketsServer
             }
         }
 
-        private void enviarMensajeAUser(string user, string mensaje)
+        private void enviarMensajeAUser(FormatoMensajeTexto objeto, string objetoRecibidoString)
         {
             try
             {
-                string destino = user;
-                string emisor = myUsername;
-                gobernador.usernameToClassComunica[user].transmitirHilo("M", emisor, mensaje);
+                string destino = objeto.usuarioDestino;
+                string emisor = objeto.usuarioOrigen;
+                gobernador.usernameToClassComunica[destino].transmitirHilo(objetoRecibidoString);
             }
             catch (Exception ex)
             {
@@ -96,18 +95,23 @@ namespace AppSocketsServer
             
         }
 
-        private void aceptarLogin(string user, string password)
+        private void aceptarLogin(FormatoLoginEnvio objetoLoginEnvio)
         {
             try
             {
-                bool rpta = gobernador.continuarComunicacion(user,password, this);
+                bool rpta = gobernador.continuarComunicacion(objetoLoginEnvio.usuario,objetoLoginEnvio.password, this);
                 if (rpta)
                 {
-                    myUsername = user;
-                    this.transmitirHilo("L",myUsername.PadRight(20), "1"); //CONTINUAR COMUNICACION ENTRAR A CHAT
+                    myUsername = objetoLoginEnvio.usuario;
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1);
+                    string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
+                    this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
                 }else
                 {
-                    this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0);
+                    string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
+                    this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
+                    //this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
                 }
             }
             catch (Exception ex)
