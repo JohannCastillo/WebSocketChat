@@ -53,12 +53,14 @@ namespace AppSocketsServer
         public string tipo;
         public string usuario;
         public int estado; //1 aceptado 0 rechazado
+        public string[] conectados;
 
-        public FormatoLoginRespuesta(string usuario, int estado)
+        public FormatoLoginRespuesta(string usuario, int estado, string[] conectados)
         {
             this.tipo = "L";
             this.usuario = usuario;
             this.estado = estado;
+            this.conectados = conectados;
         }
     }
     class FormatoNuevoUsuarioConectado

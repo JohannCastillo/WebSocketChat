@@ -44,7 +44,6 @@ namespace AppSocketsServer
 
         private void recibir()
         {
-
             while (true)
             {
                 try
@@ -64,8 +63,10 @@ namespace AppSocketsServer
                             enviarMensajeAUser(objetoMensaje, recibidoString);
                             break;
                         case "C":
+                            //Solo aplica para cliente
                             break;
                         case "D":
+                            desconectarUsuario(recibidoString);
                             break;
                         case "L":
                             FormatoLoginEnvio objetoLoginEnvio = JsonConvert.DeserializeObject<FormatoLoginEnvio>(recibidoString);
@@ -97,18 +98,22 @@ namespace AppSocketsServer
 
         private void aceptarLogin(FormatoLoginEnvio objetoLoginEnvio)
         {
+            string[] conectados = { };
             try
             {
                 bool rpta = gobernador.continuarComunicacion(objetoLoginEnvio.usuario,objetoLoginEnvio.password, this);
                 if (rpta)
                 {
-                    myUsername = objetoLoginEnvio.usuario;
-                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1);
+                    this.myUsername = objetoLoginEnvio.usuario;
+                    conectados = gobernador.usernameToClassComunica.Keys.ToArray<string>();
+                    Console.WriteLine(conectados);
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, 1, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
                     this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
+                    avisarConexionUsuarioAOtros();
                 }else
                 {
-                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0);
+                    FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, 0, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
                     this.transmitirHilo(serializado); //NO PERMITIR CHAT
                     //this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
@@ -120,24 +125,34 @@ namespace AppSocketsServer
             }
         }
 
-        //private void verUserR(string user)
-        //{
-        //    string ip = UserToIp[user];
+        private void avisarConexionUsuarioAOtros()
+        {
+            FormatoNuevoUsuarioConectado fnuc = new FormatoNuevoUsuarioConectado(myUsername);
+            string objectString = JsonConvert.SerializeObject(fnuc);
+            foreach (string key in gobernador.usernameToClassComunica.Keys)
+            {
+                if(key != myUsername)
+                {
+                    gobernador.usernameToClassComunica[key].transmitirHilo(objectString);
+                }
+            }
+        }
 
-        //}
+        private void desconectarUsuario(string objectString)
+        {
+            try
+            {
+                gobernador.desconectarUsuario(myUsername);
+                foreach (string key in gobernador.usernameToClassComunica.Keys)
+                {
+                    gobernador.usernameToClassComunica[key].transmitirHilo(objectString);
+                }
+            }
+            catch(Exception ex)
+            {
 
-        //private void verUserE(string ip)
-        //{
-        //    string name = IpToUser[ip];
-        //    msg = "M" + name.PadRight(20);
-        //}
-
-        //private void agregarUsuarioAPadre(byte[] buffer)
-        //{
-        //    string nombre = Encoding.UTF8.GetString(buffer, 1, 20).Trim();
-        //    string password = "admin";
-
-        //}
+            }
+        }
     }
     
 }

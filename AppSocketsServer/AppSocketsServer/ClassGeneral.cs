@@ -64,6 +64,10 @@ namespace AppSocketsServer
             }
         }
 
+        public void desconectarUsuario(string user)
+        {
+            usernameToClassComunica.Remove(user);
+        }
 
     }
 }

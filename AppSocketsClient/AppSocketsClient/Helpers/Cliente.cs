@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//Añadidos
+using Newtonsoft.Json;
 
 
 namespace AppSocketsClient.Helpers
@@ -48,14 +50,16 @@ namespace AppSocketsClient.Helpers
 
         private void recibe()
         {
-
-            arregloRecive = new byte[1024];
             try
             {
                 while (true)
                 {
+                    arregloRecive = new byte[1024];
                     cliente.Receive(arregloRecive);
-                    MessageBox.Show(ASCIIEncoding.UTF8.GetString(arregloRecive));
+                    string stringRecibido = ASCIIEncoding.UTF8.GetString(arregloRecive);
+                    MessageBox.Show(stringRecibido);
+                    FormatoLoginRespuesta objetoRpta = JsonConvert.DeserializeObject<FormatoLoginRespuesta>(stringRecibido);
+                    MessageBox.Show("a: "+objetoRpta.tipo +"\nb: "+objetoRpta.usuario+"\nc: "+objetoRpta.estado);
                 }
             }
             catch (Exception ex)
