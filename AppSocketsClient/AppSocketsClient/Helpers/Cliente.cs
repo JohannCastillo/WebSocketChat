@@ -82,7 +82,6 @@ namespace AppSocketsClient.Helpers
                     arregloRecive = new byte[1024];
                     cliente.Receive(arregloRecive);
                     string stringRecibido = ASCIIEncoding.UTF8.GetString(arregloRecive);
-
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(stringRecibido);
 
                     if (recibidoObject == null) continue;
@@ -91,13 +90,16 @@ namespace AppSocketsClient.Helpers
                         case (int)MensajeUtil.tipoMensaje.LoginRespuesta:
                             FormatoLoginRespuesta objetoLoginRpta = JsonConvert.DeserializeObject<FormatoLoginRespuesta>(stringRecibido);
 
-                            if (objetoLoginRpta.estado == 1)
+                            switch (objetoLoginRpta.estado)
                             {
-                                UserSession userSession = new UserSession(objetoLoginRpta.usuario, objetoLoginRpta.conectados);
-                                frmLogin.LoginSucceed(userSession);
+                                case ((int)MensajeUtil.estadoComunicacion.Continuar):
+                                    UserSession userSession = new UserSession(objetoLoginRpta.usuario, objetoLoginRpta.conectados);
+                                    frmLogin.LoginSucceed(userSession);
+                                    break;
+                                default:
+                                    frmLogin.LoginFailed(objetoLoginRpta.estado);
+                                    break;
                             }
-                            else frmLogin.LoginFailed();
-
                             break;
 
                         case (int)MensajeUtil.tipoMensaje.UsuarioConectado:

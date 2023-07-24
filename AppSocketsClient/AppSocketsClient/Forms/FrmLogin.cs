@@ -50,14 +50,42 @@ namespace AppSocketsClient.Forms
             }));
         }
 
-        public void LoginFailed ()
+        public void LoginFailed(int e)
         {
-            Invoke(new Action(() =>
-            {
-                lblPasswordError.Visible = true;
-                lblUserError.Visible = true;
+            Invoke(new Action(() => {
+                lblError.Text = "";
+                lblError.Visible = false;
+                lblPasswordError.Visible = false;
+                lblUserError.Visible = false;
             }));
+
+            switch (e)
+            {
+                case ((int)MensajeUtil.estadoComunicacion.NoMasConexiones):
+                    Invoke(new Action(() => {
+                        lblError.Visible = true;
+                        lblError.Text = "No se aceptan más conexiones";
+                    }));
+                    break;
+                case ((int)MensajeUtil.estadoComunicacion.UsuarioNoExiste):
+                    Invoke(new Action(() => {
+                        lblUserError.Visible = true;
+                    }));
+                    break;
+                case ((int)MensajeUtil.estadoComunicacion.PasswIncorrecta):
+                    Invoke(new Action(() => {
+                        lblPasswordError.Visible = true;
+                    }));
+                    break;
+                case ((int)MensajeUtil.estadoComunicacion.UsuarioYaConectado):
+                    Invoke(new Action(() => {
+                        lblError.Visible = true;
+                        lblError.Text = "El usuario ya está conectado en otro cliente";
+                    }));
+                    break;
+            }
         }
+
 
         private void btnTry_Click(object sender, EventArgs e)
         {

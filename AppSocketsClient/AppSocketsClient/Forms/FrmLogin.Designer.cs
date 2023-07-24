@@ -38,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblConnectionState = new System.Windows.Forms.Label();
             this.btnTry = new System.Windows.Forms.Button();
+            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtPassword
@@ -152,12 +153,23 @@
             this.btnTry.UseVisualStyleBackColor = true;
             this.btnTry.Click += new System.EventHandler(this.btnTry_Click);
             // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.ForeColor = System.Drawing.Color.IndianRed;
+            this.lblError.Location = new System.Drawing.Point(101, 487);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(0, 17);
+            this.lblError.TabIndex = 29;
+            this.lblError.Visible = false;
+            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(30)))), ((int)(((byte)(36)))));
             this.ClientSize = new System.Drawing.Size(510, 646);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnTry);
             this.Controls.Add(this.lblConnectionState);
             this.Controls.Add(this.label3);
@@ -193,5 +205,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblConnectionState;
         private System.Windows.Forms.Button btnTry;
+        private System.Windows.Forms.Label lblError;
     }
 }

@@ -17,6 +17,16 @@ namespace AppSocketsClient.Helpers
             UsuarioConectado,
             UsuarioDesconectado
         }
+
+        public enum estadoComunicacion
+        {
+            _,
+            Continuar,
+            NoMasConexiones,
+            UsuarioNoExiste,
+            PasswIncorrecta,
+            UsuarioYaConectado
+        }
     }
     class FormatoTipo
     {
