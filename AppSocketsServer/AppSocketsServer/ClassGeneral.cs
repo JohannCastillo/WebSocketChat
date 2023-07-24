@@ -9,9 +9,9 @@ namespace AppSocketsServer
     class ClassGeneral
     {
         private readonly static ClassGeneral _instancia = new ClassGeneral();
-        public Dictionary<string, ClassComunica> usernameConectadosToClassComunica = new Dictionary<string, ClassComunica>();
+        private Dictionary<string, ClassComunica> usernameConectadosToClassComunica = new Dictionary<string, ClassComunica>();
         private Dictionary<string, string> usuariosGuardados = new Dictionary<string, string>();
-
+        private readonly object conectadosLock = new object();
         //Aqui usar mejor una clase Chat (quizás tampoco se necesite esto)
         //public List<List<string>> chatsGuardados = new List<List<string>>();
 
@@ -79,7 +79,10 @@ namespace AppSocketsServer
 
         public void agregarUsuarioAConectados(string user, ClassComunica instanciaComunica)
         {
-            usernameConectadosToClassComunica.Add(user, instanciaComunica);
+            lock (conectadosLock)
+            {
+                usernameConectadosToClassComunica.Add(user, instanciaComunica);
+            }
         }
 
         public static ClassGeneral Instancia
@@ -92,7 +95,18 @@ namespace AppSocketsServer
 
         public void desconectarUsuario(string user)
         {
-            usernameConectadosToClassComunica.Remove(user);
+            lock (conectadosLock)
+            { 
+                usernameConectadosToClassComunica.Remove(user);
+            }
+        }
+
+        public Dictionary<string, ClassComunica> getUsuariosConectados()
+        {
+            lock (conectadosLock)
+            {
+                return usernameConectadosToClassComunica;
+            }
         }
 
     }

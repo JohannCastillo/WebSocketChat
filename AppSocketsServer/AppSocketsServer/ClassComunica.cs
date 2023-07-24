@@ -41,9 +41,9 @@ namespace AppSocketsServer
         {
             try
             {
-                byte[] messageBytes = Encoding.UTF8.GetBytes(jsonStringified);
-                socketComunica.Send(messageBytes, SocketFlags.None);
-                Console.WriteLine($"Socket server sent message: \"{jsonStringified}\"");
+                byte[] messageBytes = Encoding.ASCII.GetBytes(jsonStringified);
+                socketComunica.Send(messageBytes);
+                //Console.WriteLine($"Socket server sent message: \"{jsonStringified}\"");
             }
             catch (SocketException ex)
             {
@@ -59,14 +59,15 @@ namespace AppSocketsServer
             try
             {
                 bool continuar = true;
+                byte[] buffer;
                 while (continuar)
                 {
                     // Receive ack.
-                    byte[] buffer = new byte[1024];
+                    buffer = new byte[1024];
                     //var bufferRecibido =
-                    socketComunica.Receive(buffer, SocketFlags.None);
+                    socketComunica.Receive(buffer);
 
-                    string recibidoString = Encoding.UTF8.GetString(buffer);
+                    string recibidoString = Encoding.ASCII.GetString(buffer);
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(recibidoString);
 
                     if (recibidoObject == null) continue;
@@ -87,6 +88,8 @@ namespace AppSocketsServer
                             break;
                     }
                 }
+                gobernador.desconectarUsuario(myUsername);
+                Console.WriteLine("socket cerrado y classComunica desconectado");
             }
             catch (Exception ex)
             {
@@ -105,7 +108,7 @@ namespace AppSocketsServer
             try
             {
                 string destino = objeto.usuarioDestino;
-                gobernador.usernameConectadosToClassComunica[destino].transmitirHilo(objetoRecibidoString);
+                gobernador.getUsuariosConectados()[destino].transmitirHilo(objetoRecibidoString);
             }
             catch (Exception ex)
             {
@@ -123,7 +126,7 @@ namespace AppSocketsServer
                 if (rpta == 1)
                 {
                     this.myUsername = objetoLoginEnvio.usuario;
-                    conectados = gobernador.usernameConectadosToClassComunica.Keys.ToArray<string>();
+                    conectados = gobernador.getUsuariosConectados().Keys.ToArray<string>();
                     FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, rpta, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
 
@@ -149,11 +152,11 @@ namespace AppSocketsServer
         {
             FormatoNuevoUsuarioConectado fnuc = new FormatoNuevoUsuarioConectado(myUsername);
             string objectString = JsonConvert.SerializeObject(fnuc);
-            foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
+            foreach (string key in gobernador.getUsuariosConectados().Keys)
             {
                 if(key != myUsername)
                 {
-                    gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
+                    gobernador.getUsuariosConectados()[key].transmitir(objectString);
                 }
             }
         }
@@ -162,13 +165,12 @@ namespace AppSocketsServer
         {
             try
             {
-                socketComunica.Shutdown(SocketShutdown.Both);
-                socketComunica.Close();
-                gobernador.desconectarUsuario(myUsername);
-                Console.WriteLine("socket cerrado y classComunica desconectado");
-                foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
+                foreach (string key in gobernador.getUsuariosConectados().Keys)
                 {
-                    gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
+                    if (key != myUsername)
+                    {
+                        gobernador.getUsuariosConectados()[key].transmitirHilo(objectString);
+                    }
                 }
             }
             catch(Exception ex)
@@ -176,6 +178,20 @@ namespace AppSocketsServer
                 Console.WriteLine($"Error al desconectar usuario-socket: " + ex.ToString());
             }
         }
+
+        //private void avisarATodos(string objectString)
+        //{
+        //    Thread aviso = new Thread(()=> {
+        //        foreach (string key in gobernador.getUsuariosConectados().Keys)
+        //        {
+        //            if (key != myUsername)
+        //            {
+        //                gobernador.getUsuariosConectados()[key].transmitir(objectString);
+        //            }
+        //        }
+        //    });
+        //    aviso.Start();
+        //}
     }
     
 }
