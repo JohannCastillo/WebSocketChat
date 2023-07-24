@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace AppSocketsServer
 {
@@ -18,22 +19,23 @@ namespace AppSocketsServer
 
         string myIp;
         string myUsername;
-
+        Thread enviar;
+        Thread rec;
         //Enum para facilitar la comprensión de los tipos de mensaje
- 
+
         //Aquí se puede usar mejor una clase Chat (este sí se debería usar)
         //private Dictionary<string, List<String>> misChats = new Dictionary<string, List<string>>();
 
         public void transmitirHilo(string texto)
         {
-            Thread enviar = new Thread(() => transmitir(texto));
+            enviar = new Thread(() => transmitir(texto));
             enviar.Start();
         }
 
         public void recibirHilo(string ip)
         {
             myIp = ip;
-            Thread rec = new Thread(() => recibir());
+            rec = new Thread(() => recibir());
             rec.Start();
         }
 
@@ -43,12 +45,13 @@ namespace AppSocketsServer
             {
                 byte[] messageBytes = Encoding.UTF8.GetBytes(jsonStringified);
                 socketComunica.Send(messageBytes, SocketFlags.None);
-                Console.WriteLine($"Socket server sent message: \"{jsonStringified}\"");
+                
+                MessageBox.Show($"Socket server sent message: \"{jsonStringified}\"");
             }
             catch (SocketException ex)
             {
                 // Manejar la excepción
-                Console.WriteLine($"Socket server exception transmitiendo: {ex.Message}");
+                MessageBox.Show($"Socket server exception transmitiendo: {ex.Message}");
                 // También puedes cerrar el socket u otras acciones necesarias
             }
         }
@@ -78,8 +81,9 @@ namespace AppSocketsServer
                             enviarMensajeAUser(objetoMensaje, recibidoString);
                             break;
                         case (int)MensajeUtil.tipoMensaje.UsuarioDesconectado:
+                            MessageBox.Show("EN EL SWITCH VAN A DESCONECTAR A: " + recibidoString);
                             desconectarUsuario(recibidoString);
-                            continuar = false;
+                           // continuar = false;
                             break;
                         case (int)MensajeUtil.tipoMensaje.LoginSolicitud:
                             FormatoLoginEnvio objetoLoginEnvio = JsonConvert.DeserializeObject<FormatoLoginEnvio>(recibidoString);
@@ -91,8 +95,8 @@ namespace AppSocketsServer
             catch (Exception ex)
             {
                 //si ocurre error, dejar de escuchar y cerrar (principalmente porque otro no existe)
-                Console.WriteLine($"server recibir comunica: {ex.Message}");
-                Console.WriteLine($"classComunica de {myUsername} procede a cerrar");
+                MessageBox.Show($"server recibir comunica: {ex.Message}");
+                MessageBox.Show($"classComunica de {myUsername} procede a cerrar");
                 
                 FormatoUsuarioDesconectado fud = new FormatoUsuarioDesconectado(myUsername);
                 string fudString = JsonConvert.SerializeObject(fud);
@@ -109,7 +113,7 @@ namespace AppSocketsServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"enviar mensaje comunica: {ex.Message}");
+                MessageBox.Show($"enviar mensaje comunica: {ex.Message}");
             }
             
         }
@@ -141,7 +145,7 @@ namespace AppSocketsServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -162,10 +166,10 @@ namespace AppSocketsServer
         {
             try
             {
-                socketComunica.Shutdown(SocketShutdown.Both);
-                socketComunica.Close();
+                //socketComunica.Shutdown(SocketShutdown.Both);
+                //socketComunica.Close();
                 gobernador.desconectarUsuario(myUsername);
-                Console.WriteLine("socket cerrado y classComunica desconectado");
+                MessageBox.Show("Usuario desconectado: " + objectString);
                 foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
                 {
                     gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
@@ -173,7 +177,7 @@ namespace AppSocketsServer
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Error al desconectar usuario-socket: " + ex.ToString());
+                MessageBox.Show($"Error al desconectar usuario-socket: " + ex.ToString());
             }
         }
     }

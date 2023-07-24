@@ -103,6 +103,8 @@ namespace AppSocketsClient.Forms
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = true;
+            MessageBox.Show("ME QUIEREN CERRAR");
             cliente.DesconectarUsuario(userSession.Username);
 
 
@@ -124,6 +126,8 @@ namespace AppSocketsClient.Forms
             {
                 form.Close();
             }
+
+            e.Cancel = false;
         }
 
         public void bringToFrontChatControl(string username) { 

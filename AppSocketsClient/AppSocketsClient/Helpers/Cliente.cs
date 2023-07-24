@@ -139,6 +139,7 @@ namespace AppSocketsClient.Helpers
             {
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 cliente.Send(msg);
+                MessageBox.Show("MENSAJE ENVIADO "+ mensaje);
             }
             catch (Exception ex)
             {
@@ -148,6 +149,9 @@ namespace AppSocketsClient.Helpers
 
         public void DesconectarUsuario (string username)
         {
+
+            MessageBox.Show("DESCONECTANDO A :" + username);
+
             FormatoUsuarioDesconectado usuarioDesconectado = new FormatoUsuarioDesconectado(username);
             string objetoStringify = JsonConvert.SerializeObject(usuarioDesconectado);
             enviar(objetoStringify);
