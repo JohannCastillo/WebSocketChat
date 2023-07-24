@@ -41,13 +41,13 @@ namespace AppSocketsClient.Components
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMensaje.Text)) return;
             Enviar(txtMensaje.Text);
         }
         
 
         private void Enviar(string message)
         {
+            if (string.IsNullOrEmpty(message)) return;
             ch.AddOwnControl(message);
             txtMensaje.Text = "";
             FrmChat.Contacts[friend].LastMessage = message;
