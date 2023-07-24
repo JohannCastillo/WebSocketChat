@@ -105,7 +105,7 @@ namespace AppSocketsServer
             try
             {
                 string destino = objeto.usuarioDestino;
-                gobernador.usernameConectadosToClassComunica[destino].transmitirHilo(objetoRecibidoString);
+                gobernador.getUsuariosConectados()[destino].transmitirHilo(objetoRecibidoString);
             }
             catch (Exception ex)
             {
@@ -123,7 +123,7 @@ namespace AppSocketsServer
                 if (rpta == 1)
                 {
                     this.myUsername = objetoLoginEnvio.usuario;
-                    conectados = gobernador.usernameConectadosToClassComunica.Keys.ToArray<string>();
+                    conectados = gobernador.getUsuariosConectados().Keys.ToArray<string>();
                     FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(myUsername, rpta, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
 
@@ -149,11 +149,11 @@ namespace AppSocketsServer
         {
             FormatoNuevoUsuarioConectado fnuc = new FormatoNuevoUsuarioConectado(myUsername);
             string objectString = JsonConvert.SerializeObject(fnuc);
-            foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
+            foreach (string key in gobernador.getUsuariosConectados().Keys)
             {
                 if(key != myUsername)
                 {
-                    gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
+                    gobernador.getUsuariosConectados()[key].transmitir(objectString);
                 }
             }
         }
@@ -162,14 +162,16 @@ namespace AppSocketsServer
         {
             try
             {
-                socketComunica.Shutdown(SocketShutdown.Both);
-                socketComunica.Close();
-                gobernador.desconectarUsuario(myUsername);
                 Console.WriteLine("socket cerrado y classComunica desconectado");
-                foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
+                gobernador.desconectarUsuario(myUsername);
+                foreach (string key in gobernador.getUsuariosConectados().Keys)
                 {
-                    gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
+                    if (key != myUsername)
+                    {
+                        gobernador.getUsuariosConectados()[key].transmitirHilo(objectString);
+                    }
                 }
+                
             }
             catch(Exception ex)
             {
