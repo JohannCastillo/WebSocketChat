@@ -17,6 +17,8 @@ namespace AppSocketsClient.Components
     {
         string username;
         private bool isOnline;
+
+
         public bool IsOnline
         {
             get { return isOnline; }

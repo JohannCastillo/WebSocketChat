@@ -18,7 +18,9 @@ namespace AppSocketsClient.Forms
         private UserSession userSession;
         private Cliente cliente;
         private readonly ChatControlHelper ch;
+
         private static Dictionary<string, ChatControl> ChatControls = new Dictionary<string, ChatControl>();
+        private static Dictionary<string, SelectFriendControl> Contacts = new Dictionary<string, SelectFriendControl>();
 
         public FrmChat(UserSession userSession, Cliente cliente)
         {
@@ -44,15 +46,24 @@ namespace AppSocketsClient.Forms
 
         private void AddSelectFriendControlToPanel(string username)
         {
+            if (!Contacts.ContainsKey(username))
+            {
+                // Create contact
+                SelectFriendControl friend = new SelectFriendControl(username, userSession.OnlineUsers.Contains(username));
+                pnlContacts.Controls.Add(friend);
+                Contacts[username] = friend; 
 
-            SelectFriendControl friend = new SelectFriendControl(username, userSession.OnlineUsers.Contains(username));
-            pnlContacts.Controls.Add(friend);
-            
-            //Create chatControl for new user
-            ChatControl chatControl = new ChatControl(cliente, userSession, username);
-            chatControl.SendToBack();
-            ChatControls[username] = chatControl;
-            pnlBase.Controls.Add(chatControl);
+                //Create chatControl for new user
+                ChatControl chatControl = new ChatControl(cliente, userSession, username);
+                chatControl.SendToBack();
+                ChatControls[username] = chatControl;
+                pnlBase.Controls.Add(chatControl);
+            }
+            else {
+                SelectFriendControl friend = Contacts[username];
+                friend.IsOnline = true;
+            }
+           
         }
 
         private void SetOfflineToControl (string username)
@@ -73,9 +84,9 @@ namespace AppSocketsClient.Forms
 
         private void MensajeRecibido(object sender, string mssge, string friend)
         {
-            MessageBox.Show(mssge + "   from: " + friend);
+            //MessageBox.Show(mssge + "   from: " + friend);
             ChatControl chatControl = ChatControls[friend];
-           
+            
             Invoke(new Action(() => {
                 ch.Inicializa(chatControl.PnlChat);
                 ch.AddFriendControl(mssge, friend);
@@ -114,10 +125,9 @@ namespace AppSocketsClient.Forms
             }
         }
 
-        public void bringToFrontChatControl(string username) {
-            //Quiero ejecutar esta función desde el  SelectFriendControl friend creado y al que se le envía la instancia de este form
+        public void bringToFrontChatControl(string username) { 
+            // Pasa al frente chat seleccionado
             ChatControl chatControl = ChatControls[username];
-
             chatControl.BringToFront();
         }
     }
