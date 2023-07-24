@@ -73,6 +73,7 @@ namespace AppSocketsClient.Components
             set { 
                 lastMessage = value;
                 lblLastMessage.Text = value;
+                lblTime.Text = DateTime.Now.ToString("HH:mm");
             }
         }
 

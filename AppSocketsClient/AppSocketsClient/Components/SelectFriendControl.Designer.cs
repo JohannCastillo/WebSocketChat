@@ -35,6 +35,7 @@
             this.lblNewMessage = new System.Windows.Forms.Label();
             this.lblIsOnline = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblTime = new System.Windows.Forms.Label();
             this.pnlFriend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -42,6 +43,7 @@
             // pnlFriend
             // 
             this.pnlFriend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(29)))), ((int)(((byte)(36)))));
+            this.pnlFriend.Controls.Add(this.lblTime);
             this.pnlFriend.Controls.Add(this.lblIsOnline);
             this.pnlFriend.Controls.Add(this.pictureBox1);
             this.pnlFriend.Controls.Add(this.lblNewMessage);
@@ -118,6 +120,17 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
+            // lblTime
+            // 
+            this.lblTime.AutoEllipsis = true;
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.lblTime.Location = new System.Drawing.Point(233, 0);
+            this.lblTime.MaximumSize = new System.Drawing.Size(185, 20);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(0, 20);
+            this.lblTime.TabIndex = 6;
+            // 
             // SelectFriendControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -141,5 +154,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblLastMessage;
         private System.Windows.Forms.Label lblNewMessage;
+        private System.Windows.Forms.Label lblTime;
     }
 }
