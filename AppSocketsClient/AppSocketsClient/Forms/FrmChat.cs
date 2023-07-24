@@ -105,6 +105,7 @@ namespace AppSocketsClient.Forms
 
                 ch.Inicializa(chatControl.PnlChat);
                 ch.AddFriendControl(mssge, friend);
+
             }));
         }
         private void UsuarioDesconectado(object sender, string username)

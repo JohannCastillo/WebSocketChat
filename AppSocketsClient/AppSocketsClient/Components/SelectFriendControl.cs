@@ -24,10 +24,8 @@ namespace AppSocketsClient.Components
         public bool WasRead {
             get { return wasRead;  }
             set {
-                if (wasRead != value) {
-                    wasRead = value;
-                    UpdateWasReadVisibility();
-                }
+                wasRead = value;
+                UpdateWasReadVisibility();
             }
         }
 
