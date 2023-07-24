@@ -8,7 +8,6 @@ namespace AppSocketsClient.Helpers
 {
     public class UserSession
     {
-        private string a;
         public string Username { get; set; }
         public List<string> OnlineUsers { get; set; }
 

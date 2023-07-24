@@ -148,6 +148,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\chat.png" />
+    <None Include="Assets\lightblue.png" />
     <Content Include="Assets\man.png" />
     <None Include="Assets\send.png" />
     <None Include="Assets\green.png" />

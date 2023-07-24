@@ -15,12 +15,18 @@ namespace AppSocketsClient.Forms
 {
     public partial class FrmChat : Form
     {
+        public static FrmChat instacia;
+
         private UserSession userSession;
         private Cliente cliente;
         private readonly ChatControlHelper ch;
 
         private static Dictionary<string, ChatControl> ChatControls = new Dictionary<string, ChatControl>();
         public static Dictionary<string, SelectFriendControl> Contacts = new Dictionary<string, SelectFriendControl>();
+        
+        private Panel pnlContactos;
+
+        public Panel PnlContactos { get { return pnlContactos; } }
 
         public FrmChat(UserSession userSession, Cliente cliente)
         {
@@ -30,8 +36,10 @@ namespace AppSocketsClient.Forms
             cliente.NuevoUsuarioConectado += NuevoUsuarioConectado;
             cliente.UsuarioDesconectado += UsuarioDesconectado;
             InitializeComponent();
+            instacia = this;
             ch = new ChatControlHelper();
             this.cliente.MensajeRecibido += MensajeRecibido;
+            pnlContactos = pnlContacts;
             loadContacts();
         }
 
@@ -50,7 +58,7 @@ namespace AppSocketsClient.Forms
             {
                 // Create contact
                 SelectFriendControl friend = new SelectFriendControl(username, userSession.OnlineUsers.Contains(username));
-                pnlContacts.Controls.Add(friend);
+                pnlContactos.Controls.Add(friend);
                 Contacts[username] = friend; 
 
                 //Create chatControl for new user
@@ -69,7 +77,7 @@ namespace AppSocketsClient.Forms
         private void SetOfflineToControl (string username)
         {
 
-            SelectFriendControl friend = pnlContacts.Controls.OfType<SelectFriendControl>().FirstOrDefault(control => control.Username == username);
+            SelectFriendControl friend = pnlContactos.Controls.OfType<SelectFriendControl>().FirstOrDefault(control => control.Username == username);
             friend.IsOnline = false;
         }
 
@@ -88,7 +96,13 @@ namespace AppSocketsClient.Forms
             ChatControl chatControl = ChatControls[friend];
             
             Invoke(new Action(() => {
-                Contacts[friend].LastMessage = mssge;
+                //Actualizar contacto con último mensaje y colocar primero en la lista de contactos
+                SelectFriendControl contacto = Contacts[friend];
+                contacto.LastMessage = mssge;
+                pnlContactos.Controls.SetChildIndex(Contacts[friend], 0);
+
+                if(!chatControl.ContainsFocus) contacto.WasRead = false;
+
                 ch.Inicializa(chatControl.PnlChat);
                 ch.AddFriendControl(mssge, friend);
             }));

@@ -30,12 +30,12 @@
         {
             this.pnlChatLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlFriend = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblFriend = new System.Windows.Forms.Label();
             this.pnlChat = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.txtMensaje = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnEnviar = new System.Windows.Forms.Button();
+            this.txtMensaje = new System.Windows.Forms.TextBox();
             this.pnlChatLayout.SuspendLayout();
             this.pnlFriend.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -64,6 +64,17 @@
             this.pnlFriend.Size = new System.Drawing.Size(726, 52);
             this.pnlFriend.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(29, 12);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 21);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Conversando con ";
+            // 
             // lblFriend
             // 
             this.lblFriend.AutoSize = true;
@@ -81,7 +92,7 @@
             this.pnlChat.AutoScroll = true;
             this.pnlChat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(37)))));
             this.pnlChat.Location = new System.Drawing.Point(4, 60);
-            this.pnlChat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlChat.Margin = new System.Windows.Forms.Padding(4);
             this.pnlChat.Name = "pnlChat";
             this.pnlChat.Size = new System.Drawing.Size(722, 464);
             this.pnlChat.TabIndex = 1;
@@ -91,36 +102,10 @@
             this.panel3.Controls.Add(this.btnEnviar);
             this.panel3.Controls.Add(this.txtMensaje);
             this.panel3.Location = new System.Drawing.Point(4, 532);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(722, 60);
             this.panel3.TabIndex = 4;
-            // 
-            // txtMensaje
-            // 
-            this.txtMensaje.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(31)))));
-            this.txtMensaje.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMensaje.ForeColor = System.Drawing.SystemColors.Window;
-            this.txtMensaje.Location = new System.Drawing.Point(4, 4);
-            this.txtMensaje.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtMensaje.MaxLength = 32000;
-            this.txtMensaje.Multiline = true;
-            this.txtMensaje.Name = "txtMensaje";
-            this.txtMensaje.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMensaje.Size = new System.Drawing.Size(653, 53);
-            this.txtMensaje.TabIndex = 3;
-            this.txtMensaje.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMensaje_KeyDown);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(29, 12);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 21);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Conversando con ";
             // 
             // btnEnviar
             // 
@@ -136,6 +121,21 @@
             this.btnEnviar.UseVisualStyleBackColor = false;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
             // 
+            // txtMensaje
+            // 
+            this.txtMensaje.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(31)))));
+            this.txtMensaje.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMensaje.ForeColor = System.Drawing.SystemColors.Window;
+            this.txtMensaje.Location = new System.Drawing.Point(4, 4);
+            this.txtMensaje.Margin = new System.Windows.Forms.Padding(4);
+            this.txtMensaje.MaxLength = 32000;
+            this.txtMensaje.Multiline = true;
+            this.txtMensaje.Name = "txtMensaje";
+            this.txtMensaje.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMensaje.Size = new System.Drawing.Size(653, 53);
+            this.txtMensaje.TabIndex = 3;
+            this.txtMensaje.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMensaje_KeyDown);
+            // 
             // ChatControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -143,9 +143,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(37)))));
             this.Controls.Add(this.pnlChatLayout);
             this.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChatControl";
             this.Size = new System.Drawing.Size(734, 604);
+            this.Enter += new System.EventHandler(this.ChatControl_Enter);
             this.pnlChatLayout.ResumeLayout(false);
             this.pnlFriend.ResumeLayout(false);
             this.pnlFriend.PerformLayout();

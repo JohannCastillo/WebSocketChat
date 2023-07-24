@@ -54,6 +54,9 @@ namespace AppSocketsClient.Components
 
             FormatoMensajeTexto objMensaje = new FormatoMensajeTexto(userSession.Username, friend, message);
             string objetoStringify = JsonConvert.SerializeObject(objMensaje);
+
+            FrmChat.instacia.PnlContactos.Controls.SetChildIndex(FrmChat.Contacts[friend], 0);
+
             client.enviar(objetoStringify);
         }
 
@@ -74,6 +77,9 @@ namespace AppSocketsClient.Components
             }
         }
 
-        
+        private void ChatControl_Enter(object sender, EventArgs e)
+        {
+            FrmChat.Contacts[friend].WasRead = true;
+        }
     }
 }

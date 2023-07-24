@@ -19,7 +19,17 @@ namespace AppSocketsClient.Components
         string lastMessage; 
 
         private bool isOnline;
+        private bool wasRead;
 
+        public bool WasRead {
+            get { return wasRead;  }
+            set {
+                if (wasRead != value) {
+                    wasRead = value;
+                    UpdateWasReadVisibility();
+                }
+            }
+        }
 
         public bool IsOnline
         {
@@ -51,7 +61,9 @@ namespace AppSocketsClient.Components
         {
             lblIsOnline.Visible = IsOnline;
         }
-
+        private void UpdateWasReadVisibility() {
+            lblNewMessage.Visible = !wasRead;
+        }
         public string Username
         {
             get { return username; }
@@ -68,6 +80,7 @@ namespace AppSocketsClient.Components
 
         private void pnlFriend_Click(object sender, EventArgs e)
         {
+            WasRead = true;
             FrmChat parentForm = FindForm() as FrmChat;
             if (parentForm != null)
             {
