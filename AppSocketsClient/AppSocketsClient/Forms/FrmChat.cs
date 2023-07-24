@@ -20,7 +20,7 @@ namespace AppSocketsClient.Forms
         private readonly ChatControlHelper ch;
 
         private static Dictionary<string, ChatControl> ChatControls = new Dictionary<string, ChatControl>();
-        private static Dictionary<string, SelectFriendControl> Contacts = new Dictionary<string, SelectFriendControl>();
+        public static Dictionary<string, SelectFriendControl> Contacts = new Dictionary<string, SelectFriendControl>();
 
         public FrmChat(UserSession userSession, Cliente cliente)
         {
@@ -88,6 +88,7 @@ namespace AppSocketsClient.Forms
             ChatControl chatControl = ChatControls[friend];
             
             Invoke(new Action(() => {
+                Contacts[friend].LastMessage = mssge;
                 ch.Inicializa(chatControl.PnlChat);
                 ch.AddFriendControl(mssge, friend);
             }));

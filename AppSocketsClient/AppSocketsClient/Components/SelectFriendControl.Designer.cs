@@ -30,9 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectFriendControl));
             this.pnlFriend = new System.Windows.Forms.Panel();
-            this.lblUserName = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblIsOnline = new System.Windows.Forms.Label();
+            this.lblUserName = new System.Windows.Forms.Label();
+            this.lblLastMessage = new System.Windows.Forms.Label();
             this.pnlFriend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -40,6 +41,7 @@
             // pnlFriend
             // 
             this.pnlFriend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(29)))), ((int)(((byte)(36)))));
+            this.pnlFriend.Controls.Add(this.lblLastMessage);
             this.pnlFriend.Controls.Add(this.pictureBox1);
             this.pnlFriend.Controls.Add(this.lblIsOnline);
             this.pnlFriend.Controls.Add(this.lblUserName);
@@ -51,17 +53,6 @@
             this.pnlFriend.Size = new System.Drawing.Size(281, 53);
             this.pnlFriend.TabIndex = 0;
             this.pnlFriend.Click += new System.EventHandler(this.pnlFriend_Click);
-            // 
-            // lblUserName
-            // 
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserName.ForeColor = System.Drawing.Color.White;
-            this.lblUserName.Location = new System.Drawing.Point(72, 16);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(87, 19);
-            this.lblUserName.TabIndex = 0;
-            this.lblUserName.Text = "John Doe";
             // 
             // pictureBox1
             // 
@@ -84,6 +75,28 @@
             this.lblIsOnline.TabIndex = 2;
             this.lblIsOnline.Text = "   ";
             // 
+            // lblUserName
+            // 
+            this.lblUserName.AutoSize = true;
+            this.lblUserName.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.ForeColor = System.Drawing.Color.White;
+            this.lblUserName.Location = new System.Drawing.Point(70, 5);
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(87, 19);
+            this.lblUserName.TabIndex = 0;
+            this.lblUserName.Text = "John Doe";
+            // 
+            // lblLastMessage
+            // 
+            this.lblLastMessage.AutoEllipsis = true;
+            this.lblLastMessage.AutoSize = true;
+            this.lblLastMessage.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.lblLastMessage.Location = new System.Drawing.Point(70, 30);
+            this.lblLastMessage.MaximumSize = new System.Drawing.Size(185, 20);
+            this.lblLastMessage.Name = "lblLastMessage";
+            this.lblLastMessage.Size = new System.Drawing.Size(0, 20);
+            this.lblLastMessage.TabIndex = 4;
+            // 
             // SelectFriendControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -105,5 +118,6 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblIsOnline;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lblLastMessage;
     }
 }

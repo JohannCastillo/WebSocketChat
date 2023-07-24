@@ -50,6 +50,7 @@ namespace AppSocketsClient.Components
         {
             ch.AddOwnControl(message);
             txtMensaje.Text = "";
+            FrmChat.Contacts[friend].LastMessage = message;
 
             FormatoMensajeTexto objMensaje = new FormatoMensajeTexto(userSession.Username, friend, message);
             string objetoStringify = JsonConvert.SerializeObject(objMensaje);

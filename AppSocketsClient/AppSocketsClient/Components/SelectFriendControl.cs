@@ -16,6 +16,8 @@ namespace AppSocketsClient.Components
     public partial class SelectFriendControl : UserControl
     {
         string username;
+        string lastMessage; 
+
         private bool isOnline;
 
 
@@ -42,6 +44,7 @@ namespace AppSocketsClient.Components
             lblUserName.Text = username;
 
             IsOnline = isOnline;
+            lastMessage = "";
         }
 
         private void UpdateIsOnlineVisibility()
@@ -55,7 +58,13 @@ namespace AppSocketsClient.Components
             set { username = value; } 
         }
 
-      
+        public string LastMessage {
+            get { return lastMessage; }
+            set { 
+                lastMessage = value;
+                lblLastMessage.Text = value;
+            }
+        }
 
         private void pnlFriend_Click(object sender, EventArgs e)
         {
