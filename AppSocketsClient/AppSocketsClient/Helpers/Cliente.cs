@@ -15,6 +15,17 @@ namespace AppSocketsClient.Helpers
 {
     public class Cliente
     {
+        //CLIENTE ORIGINAL
+
+        //Usuario cliente de origen
+        public string me;
+
+        public string Me
+        {
+            get { return me; }
+            set { me = value; }
+        }
+
         private Socket cliente;
         private IPAddress ipServidor;
         
@@ -27,6 +38,8 @@ namespace AppSocketsClient.Helpers
         public delegate void NuevoUsuarioConectadoHandler(object sender, string username);
         public event NuevoUsuarioConectadoHandler NuevoUsuarioConectado;
 
+        public delegate void MensajeRecibidoHandler(object sender, string mssge, string friend);
+        public event MensajeRecibidoHandler MensajeRecibido;
 
         public Cliente(FrmLogin frmLogin)
         {
@@ -93,6 +106,7 @@ namespace AppSocketsClient.Helpers
                             {
                                 UserSession userSession = new UserSession(objetoLoginRpta.usuario, objetoLoginRpta.conectados);
                                 frmLogin.LoginSucceed(userSession);
+                                me = objetoLoginRpta.usuario;  
                             }
                             else frmLogin.LoginFailed();
 
@@ -104,6 +118,7 @@ namespace AppSocketsClient.Helpers
                             break;
                         case (int)MensajeUtil.tipoMensaje.Mensaje:
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(stringRecibido);
+                            OnMensajeRecibido(objetoMensaje.mensaje, objetoMensaje.usuarioOrigen);
                             break;
 
                     }
@@ -137,6 +152,12 @@ namespace AppSocketsClient.Helpers
         {
             if (NuevoUsuarioConectado == null) return;
             NuevoUsuarioConectado(this, username);
+        }
+
+        protected virtual void OnMensajeRecibido(string mssge, string friend)
+        {
+            if (MensajeRecibido == null) return;
+            MensajeRecibido(this, mssge, friend);
         }
     }
 }

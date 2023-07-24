@@ -1,4 +1,5 @@
-﻿using AppSocketsClient.Helpers;
+﻿using AppSocketsClient.Forms;
+using AppSocketsClient.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,19 +15,14 @@ namespace AppSocketsClient.Components
 {
     public partial class SelectFriendControl : UserControl
     {
-        private readonly Panel pnlBase;
         private readonly string username;
         private readonly bool isOnline;
+        //Instancia del cliente
 
-        //Almacenar chatControl ya añadidos al panel
-        private static Dictionary<string, ChatControl> chatControls = new Dictionary<string, ChatControl>();
-
-        public SelectFriendControl(Panel pnlBase, string username, bool isOnline = true)
+        public SelectFriendControl(Cliente client, string username, bool isOnline = true)
         {
             InitializeComponent();
-            
-            this.pnlBase = pnlBase;
-
+    
             this.username = username;
             lblUserName.Text = username;
 
@@ -39,20 +35,15 @@ namespace AppSocketsClient.Components
             get { return username; }
         }
 
+      
+
         private void pnlFriend_Click(object sender, EventArgs e)
         {
-            ChatControl chatControl;
-            if (!chatControls.ContainsKey(Username))
+            FrmChat parentForm = FindForm() as FrmChat;
+            if (parentForm != null)
             {
-                chatControl = new ChatControl(Username);
-                chatControls[Username] = chatControl;
-                pnlBase.Controls.Add(chatControl);
+                parentForm.bringToFrontChatControl(Username);
             }
-            else
-            {
-                chatControl = chatControls[Username];
-            }
-            chatControl.BringToFront();
         }
     }
 }

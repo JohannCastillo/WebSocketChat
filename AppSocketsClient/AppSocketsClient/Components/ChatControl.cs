@@ -1,4 +1,6 @@
-﻿using AppSocketsClient.Helpers;
+﻿using AppSocketsClient.Forms;
+using AppSocketsClient.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +16,20 @@ namespace AppSocketsClient.Components
     public partial class ChatControl : UserControl
     {
         private string friend;
+        private readonly Cliente client;
         private readonly ChatControlHelper ch;
-        public ChatControl(string friend)
+
+        public FlowLayoutPanel PnlChat
+        {
+            get { return pnlChat; }
+        }
+
+        public ChatControl(Cliente client, string friend)
         {
             InitializeComponent();
+            this.client = client;
             this.friend = friend;
+
             lblFriend.Text = friend;
             ch = new ChatControlHelper();
             ch.Inicializa(pnlChat);
@@ -37,6 +48,10 @@ namespace AppSocketsClient.Components
         {
             ch.AddOwnControl(message);
             txtMensaje.Text = "";
+
+            FormatoMensajeTexto objMensaje = new FormatoMensajeTexto(client.Me, friend, message);
+            string objetoStringify = JsonConvert.SerializeObject(objMensaje);
+            client.enviar(objetoStringify);
         }
 
         private void txtMensaje_KeyDown(object sender, KeyEventArgs e)
@@ -59,5 +74,7 @@ namespace AppSocketsClient.Components
                 pnlChat.ScrollControlIntoView(pnlChat.Controls[pnlChat.Controls.Count - 1]);
             }
         }
+
+        
     }
 }
