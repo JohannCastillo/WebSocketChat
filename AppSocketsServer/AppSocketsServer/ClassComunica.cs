@@ -26,15 +26,13 @@ namespace AppSocketsServer
 
         public void transmitirHilo(string texto)
         {
-            Thread enviar = new Thread(() => transmitir(texto));
-            enviar.Start();
+            ThreadPool.QueueUserWorkItem((_) => transmitir(texto));
         }
 
         public void recibirHilo(string ip)
         {
             myIp = ip;
-            Thread rec = new Thread(() => recibir());
-            rec.Start();
+            ThreadPool.QueueUserWorkItem((_) => recibir());
         }
 
         private void transmitir(string jsonStringified)
