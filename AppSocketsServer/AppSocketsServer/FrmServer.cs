@@ -19,6 +19,7 @@ namespace AppSocketsServer
         private ClassGeneral gobernador = ClassGeneral.Instancia;
         IPEndPoint ipEndPoint;
         Socket socketPadre;
+        Thread listener;
         public Server()
         {
             InitializeComponent();
@@ -35,9 +36,9 @@ namespace AppSocketsServer
             ipEndPoint = new IPEndPoint(ipAddr, 13000); //colocar IPAdress.Any para 0.0.0.0
 
             // create a Tcp/Ip Socket 
-            socketPadre = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            socketPadre = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            Thread listener = new Thread(listen);
+            listener = new Thread(listen);
             listener.Start();
 
             // Start listening for connections

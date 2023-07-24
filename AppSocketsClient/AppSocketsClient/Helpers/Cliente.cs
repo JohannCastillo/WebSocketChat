@@ -83,7 +83,7 @@ namespace AppSocketsClient.Helpers
                 {
                     arregloRecive = new byte[1024];
                     cliente.Receive(arregloRecive);
-                    string stringRecibido = ASCIIEncoding.UTF8.GetString(arregloRecive);
+                    string stringRecibido = Encoding.ASCII.GetString(arregloRecive);
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(stringRecibido);
 
                     if (recibidoObject == null) continue;
@@ -110,7 +110,7 @@ namespace AppSocketsClient.Helpers
                             break;
 
                         case (int)MensajeUtil.tipoMensaje.UsuarioDesconectado:
-                            FormatoNuevoUsuarioConectado sefue = JsonConvert.DeserializeObject<FormatoNuevoUsuarioConectado>(stringRecibido);
+                            FormatoUsuarioDesconectado sefue = JsonConvert.DeserializeObject<FormatoUsuarioDesconectado>(stringRecibido);
                             OnUsuarioDesconectado(sefue.usuario);
                             break;
 
@@ -150,6 +150,7 @@ namespace AppSocketsClient.Helpers
         {
             FormatoUsuarioDesconectado usuarioDesconectado = new FormatoUsuarioDesconectado(username);
             string objetoStringify = JsonConvert.SerializeObject(usuarioDesconectado);
+            Console.WriteLine($"desconexion enviada: {objetoStringify}");
             enviar(objetoStringify);
         }
 
