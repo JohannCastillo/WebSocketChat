@@ -15,24 +15,42 @@ namespace AppSocketsClient.Components
 {
     public partial class SelectFriendControl : UserControl
     {
-        private readonly string username;
-        private readonly bool isOnline;
-        //Instancia del cliente
+        string username;
+        private bool isOnline;
+        public bool IsOnline
+        {
+            get { return isOnline; }
+            set
+            {
+                if (isOnline != value)
+                {
+                    isOnline = value;
+                    UpdateIsOnlineVisibility();
+                }
+            }
+        }
 
-        public SelectFriendControl(Cliente client, string username, bool isOnline = true)
+  
+
+        public SelectFriendControl(string username, bool isOnline = true)
         {
             InitializeComponent();
-    
+
             this.username = username;
             lblUserName.Text = username;
 
-            this.isOnline = isOnline;
-            lblIsOnline.Visible = isOnline;
+            IsOnline = isOnline;
+        }
+
+        private void UpdateIsOnlineVisibility()
+        {
+            lblIsOnline.Visible = IsOnline;
         }
 
         public string Username
         {
             get { return username; }
+            set { username = value; } 
         }
 
       

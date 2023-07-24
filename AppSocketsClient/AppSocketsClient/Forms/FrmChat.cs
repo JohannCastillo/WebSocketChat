@@ -24,7 +24,9 @@ namespace AppSocketsClient.Forms
         {
             this.cliente = cliente;
             this.userSession = userSession;
+            this.cliente = cliente; 
             cliente.NuevoUsuarioConectado += NuevoUsuarioConectado;
+            cliente.UsuarioDesconectado += UsuarioDesconectado;
             InitializeComponent();
             ch = new ChatControlHelper();
             this.cliente.MensajeRecibido += MensajeRecibido;
@@ -43,7 +45,7 @@ namespace AppSocketsClient.Forms
         private void AddSelectFriendControlToPanel(string username)
         {
 
-            SelectFriendControl friend = new SelectFriendControl(cliente, username, userSession.OnlineUsers.Contains(username));
+            SelectFriendControl friend = new SelectFriendControl(username, userSession.OnlineUsers.Contains(username));
             pnlContacts.Controls.Add(friend);
             
             //Create chatControl for new user
@@ -51,6 +53,13 @@ namespace AppSocketsClient.Forms
             chatControl.SendToBack();
             ChatControls[username] = chatControl;
             pnlBase.Controls.Add(chatControl);
+        }
+
+        private void SetOfflineToControl (string username)
+        {
+
+            SelectFriendControl friend = pnlContacts.Controls.OfType<SelectFriendControl>().FirstOrDefault(control => control.Username == username);
+            friend.IsOnline = false;
         }
 
         private void NuevoUsuarioConectado (object sender, string username)
@@ -72,9 +81,19 @@ namespace AppSocketsClient.Forms
                 ch.AddFriendControl(mssge, friend);
             }));
         }
+        private void UsuarioDesconectado(object sender, string username)
+        {
+            Invoke(new Action(() => {
+                SetOfflineToControl(username);
+            }));
+        }
+
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
         {
+            cliente.DesconectarUsuario(userSession.Username);
+
+
             // Crea una lista de formularios ocultos
             List<Form> formulariosOcultos = new List<Form>();
 
