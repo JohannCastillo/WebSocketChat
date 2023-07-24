@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace AppSocketsClient.Forms
 {
@@ -16,15 +17,19 @@ namespace AppSocketsClient.Forms
     {
         private UserSession userSession;
         private Cliente cliente;
+        private readonly ChatControlHelper ch;
+        private static Dictionary<string, ChatControl> ChatControls = new Dictionary<string, ChatControl>();
 
         public FrmChat(UserSession userSession, Cliente cliente)
         {
+            this.cliente = cliente;
             this.userSession = userSession;
             this.cliente = cliente; 
             cliente.NuevoUsuarioConectado += NuevoUsuarioConectado;
             cliente.UsuarioDesconectado += UsuarioDesconectado;
             InitializeComponent();
-
+            ch = new ChatControlHelper();
+            this.cliente.MensajeRecibido += MensajeRecibido;
             loadContacts();
         }
 
@@ -40,8 +45,14 @@ namespace AppSocketsClient.Forms
         private void AddSelectFriendControlToPanel(string username)
         {
 
-            SelectFriendControl friend = new SelectFriendControl(pnlBase, username, userSession.OnlineUsers.Contains(username));
+            SelectFriendControl friend = new SelectFriendControl(username, userSession.OnlineUsers.Contains(username));
             pnlContacts.Controls.Add(friend);
+            
+            //Create chatControl for new user
+            ChatControl chatControl = new ChatControl(cliente, userSession, username);
+            chatControl.SendToBack();
+            ChatControls[username] = chatControl;
+            pnlBase.Controls.Add(chatControl);
         }
 
         private void SetOfflineToControl (string username)
@@ -60,6 +71,16 @@ namespace AppSocketsClient.Forms
             }));
         }
 
+        private void MensajeRecibido(object sender, string mssge, string friend)
+        {
+            MessageBox.Show(mssge + "   from: " + friend);
+            ChatControl chatControl = ChatControls[friend];
+           
+            Invoke(new Action(() => {
+                ch.Inicializa(chatControl.PnlChat);
+                ch.AddFriendControl(mssge, friend);
+            }));
+        }
         private void UsuarioDesconectado(object sender, string username)
         {
             Invoke(new Action(() => {
@@ -91,6 +112,13 @@ namespace AppSocketsClient.Forms
             {
                 form.Close();
             }
+        }
+
+        public void bringToFrontChatControl(string username) {
+            //Quiero ejecutar esta función desde el  SelectFriendControl friend creado y al que se le envía la instancia de este form
+            ChatControl chatControl = ChatControls[username];
+
+            chatControl.BringToFront();
         }
     }
 }

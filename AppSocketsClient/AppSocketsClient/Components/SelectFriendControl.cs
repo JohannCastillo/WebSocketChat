@@ -1,4 +1,5 @@
-﻿using AppSocketsClient.Helpers;
+﻿using AppSocketsClient.Forms;
+using AppSocketsClient.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,8 +15,7 @@ namespace AppSocketsClient.Components
 {
     public partial class SelectFriendControl : UserControl
     {
-        private readonly Panel pnlBase;
-
+        string username;
         private bool isOnline;
         public bool IsOnline
         {
@@ -30,15 +30,13 @@ namespace AppSocketsClient.Components
             }
         }
 
-        public string Username { get; set; }
+  
 
-        public SelectFriendControl(Panel pnlBase, string username, bool isOnline = true)
+        public SelectFriendControl(string username, bool isOnline = true)
         {
             InitializeComponent();
 
-            this.pnlBase = pnlBase;
-
-            Username = username;
+            this.username = username;
             lblUserName.Text = username;
 
             IsOnline = isOnline;
@@ -49,11 +47,21 @@ namespace AppSocketsClient.Components
             lblIsOnline.Visible = IsOnline;
         }
 
+        public string Username
+        {
+            get { return username; }
+            set { username = value; } 
+        }
+
+      
+
         private void pnlFriend_Click(object sender, EventArgs e)
         {
-            ChatControl chatControl = new ChatControl(Username);
-            pnlBase.Controls.Add(chatControl);
-            chatControl.BringToFront();
+            FrmChat parentForm = FindForm() as FrmChat;
+            if (parentForm != null)
+            {
+                parentForm.bringToFrontChatControl(Username);
+            }
         }
     }
 }

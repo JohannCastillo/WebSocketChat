@@ -31,6 +31,7 @@ namespace AppSocketsClient.Forms
             if (string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtUser.Text)) return;
             string usuario = txtUser.Text.Trim();
             string password = txtPassword.Text.Trim();
+            
             FormatoLoginEnvio objetoLoginEnvio = new FormatoLoginEnvio(usuario, password);
             string objetoStringify = JsonConvert.SerializeObject(objetoLoginEnvio);
             client.enviar(objetoStringify);
@@ -41,7 +42,6 @@ namespace AppSocketsClient.Forms
 
         public void LoginSucceed (UserSession userSession)
         {
-            
             Invoke(new Action(() =>
             {
                 FrmChat frmChat = new FrmChat(userSession, client);

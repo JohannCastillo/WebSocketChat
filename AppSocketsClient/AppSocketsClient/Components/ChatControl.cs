@@ -1,4 +1,6 @@
-﻿using AppSocketsClient.Helpers;
+﻿using AppSocketsClient.Forms;
+using AppSocketsClient.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +16,22 @@ namespace AppSocketsClient.Components
     public partial class ChatControl : UserControl
     {
         private string friend;
+        private UserSession userSession;
+        private readonly Cliente client;
         private readonly ChatControlHelper ch;
-        public ChatControl(string friend)
+
+        public FlowLayoutPanel PnlChat
+        {
+            get { return pnlChat; }
+        }
+
+        public ChatControl(Cliente client, UserSession userSession, string friend)
         {
             InitializeComponent();
+            this.client = client;
             this.friend = friend;
+            this.userSession = userSession;
+
             lblFriend.Text = friend;
             ch = new ChatControlHelper();
             ch.Inicializa(pnlChat);
@@ -37,6 +50,10 @@ namespace AppSocketsClient.Components
         {
             ch.AddOwnControl(message);
             txtMensaje.Text = "";
+
+            FormatoMensajeTexto objMensaje = new FormatoMensajeTexto(userSession.Username, friend, message);
+            string objetoStringify = JsonConvert.SerializeObject(objMensaje);
+            client.enviar(objetoStringify);
         }
 
         private void txtMensaje_KeyDown(object sender, KeyEventArgs e)
@@ -51,13 +68,15 @@ namespace AppSocketsClient.Components
         private void pnlChatLayout_Paint(object sender, PaintEventArgs e)
         {
 
-            ch.AddOwnControl("Buenas tardes");
-            ch.AddFriendControl("Que tal", "Johann");
+            //ch.AddOwnControl("Buenas tardes");
+            //ch.AddFriendControl("Que tal", "Johann");
 
             if(pnlChat.Controls.Count > 0)
             {
                 pnlChat.ScrollControlIntoView(pnlChat.Controls[pnlChat.Controls.Count - 1]);
             }
         }
+
+        
     }
 }

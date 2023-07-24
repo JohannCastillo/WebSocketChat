@@ -27,6 +27,8 @@ namespace AppSocketsClient.Helpers
         public delegate void NuevoUsuarioConectadoHandler(object sender, string username);
         public event NuevoUsuarioConectadoHandler NuevoUsuarioConectado;
 
+        public delegate void MensajeRecibidoHandler(object sender, string mssge, string friend);
+        public event MensajeRecibidoHandler MensajeRecibido;
         public delegate void UsuarioDesconectadoHandler(object sender, string username);
         public event UsuarioDesconectadoHandler UsuarioDesconectado;
 
@@ -114,6 +116,7 @@ namespace AppSocketsClient.Helpers
 
                         case (int)MensajeUtil.tipoMensaje.Mensaje:
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(stringRecibido);
+                            OnMensajeRecibido(objetoMensaje.mensaje, objetoMensaje.usuarioOrigen);
                             break;
 
                     }
@@ -156,6 +159,11 @@ namespace AppSocketsClient.Helpers
             NuevoUsuarioConectado(this, username);
         }
 
+        protected virtual void OnMensajeRecibido(string mssge, string friend)
+        {
+            if (MensajeRecibido == null) return;
+            MensajeRecibido(this, mssge, friend);
+        }
         protected virtual void OnUsuarioDesconectado(string username)
         {
             if (UsuarioDesconectado == null) return;
