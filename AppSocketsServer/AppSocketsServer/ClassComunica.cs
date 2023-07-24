@@ -56,9 +56,10 @@ namespace AppSocketsServer
 
         private void recibir()
         {
-            while (true)
+            try
             {
-                try
+                bool continuar = true;
+                while (continuar)
                 {
                     // Receive ack.
                     byte[] buffer = new byte[1024];
@@ -69,18 +70,16 @@ namespace AppSocketsServer
                     FormatoTipo recibidoObject = JsonConvert.DeserializeObject<FormatoTipo>(recibidoString);
 
                     if (recibidoObject == null) continue;
-                 
+
                     switch (recibidoObject.tipo)
                     {
                         case (int)MensajeUtil.tipoMensaje.Mensaje:
                             FormatoMensajeTexto objetoMensaje = JsonConvert.DeserializeObject<FormatoMensajeTexto>(recibidoString);
                             enviarMensajeAUser(objetoMensaje, recibidoString);
                             break;
-                        //case "C":
-                        //    //Solo aplica para cliente
-                        //    break;
                         case (int)MensajeUtil.tipoMensaje.UsuarioDesconectado:
                             desconectarUsuario(recibidoString);
+                            continuar = false;
                             break;
                         case (int)MensajeUtil.tipoMensaje.LoginSolicitud:
                             FormatoLoginEnvio objetoLoginEnvio = JsonConvert.DeserializeObject<FormatoLoginEnvio>(recibidoString);
@@ -88,10 +87,16 @@ namespace AppSocketsServer
                             break;
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"server recibir comunica: {ex.Message}");
-                }
+            }
+            catch (Exception ex)
+            {
+                //si ocurre error, dejar de escuchar y cerrar (principalmente porque otro no existe)
+                Console.WriteLine($"server recibir comunica: {ex.Message}");
+                Console.WriteLine($"classComunica de {myUsername} procede a cerrar");
+                
+                FormatoUsuarioDesconectado fud = new FormatoUsuarioDesconectado(myUsername);
+                string fudString = JsonConvert.SerializeObject(fud);
+                desconectarUsuario(fudString);
             }
         }
 
@@ -100,7 +105,6 @@ namespace AppSocketsServer
             try
             {
                 string destino = objeto.usuarioDestino;
-                string emisor = objeto.usuarioOrigen;
                 gobernador.usernameConectadosToClassComunica[destino].transmitirHilo(objetoRecibidoString);
             }
             catch (Exception ex)
@@ -127,12 +131,12 @@ namespace AppSocketsServer
 
                     this.transmitirHilo(serializado); //CONTINUAR COMUNICACION ENTRAR A CHAT
                     avisarConexionUsuarioAOtros();
-                }else
+                }
+                else
                 {
                     FormatoLoginRespuesta objetoRespuestaLogin = new FormatoLoginRespuesta(objetoLoginEnvio.usuario, rpta, conectados);
                     string serializado = JsonConvert.SerializeObject(objetoRespuestaLogin);
-                    this.transmitirHilo(serializado); //NO PERMITIR CHAT
-                    //this.transmitirHilo("L", user.PadRight(20), "0"); //RECHAZAR , QUEDARSE EN LOGIN
+                    this.transmitirHilo(serializado); //NO PERMITIR CHAT, QUEDARSE EN LOGIN
                 }
             }
             catch (Exception ex)
@@ -158,7 +162,10 @@ namespace AppSocketsServer
         {
             try
             {
+                socketComunica.Shutdown(SocketShutdown.Both);
+                socketComunica.Close();
                 gobernador.desconectarUsuario(myUsername);
+                Console.WriteLine("socket cerrado y classComunica desconectado");
                 foreach (string key in gobernador.usernameConectadosToClassComunica.Keys)
                 {
                     gobernador.usernameConectadosToClassComunica[key].transmitirHilo(objectString);
@@ -166,7 +173,7 @@ namespace AppSocketsServer
             }
             catch(Exception ex)
             {
-
+                Console.WriteLine($"Error al desconectar usuario-socket: " + ex.ToString());
             }
         }
     }
